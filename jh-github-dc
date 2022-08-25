@@ -48,8 +48,11 @@ case "$CMD" in
     header_end
 
     header_begin "Starting in the docker '$CONTAINER_NAME' from '$TAG_NAME'"
-    mkdir tmp/
-    docker run --name "$CONTAINER_NAME" --privileged --volume "$PWD:/workspaces/$PRJ_NAME" --workdir "/workspaces/$PRJ_NAME" "$TAG_NAME" sleep infinity >tmp/docker.log 2>&1
+    (
+        echo "Starting docker $TAG_NAME as $CONTAINER_NAME for project $PRJ_NAME"
+        mkdir tmp/
+        docker run --name "$CONTAINER_NAME" --privileged --volume "$PWD:/workspaces/$PRJ_NAME" --workdir "/workspaces/$PRJ_NAME" "$TAG_NAME" sleep infinity &
+    ) >tmp/docker.log 2>&1
     header_end
 
     header_begin "Wait for docker to be ready"
