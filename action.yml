@@ -1,0 +1,21 @@
+name: 'devcontainer'
+description: 'Run in devcontainer'
+inputs:
+  dc-user:  # id of input
+    description: 'Who run the commands'
+    default: 'root'
+# outputs:
+#   random-number:
+#     description: "Random number"
+#     value: ${{ steps.random-number-generator.outputs.random-number }}
+runs:
+  using: "composite"
+  env:
+    DC_USER: ${{ inputs.dc-user }}
+  steps:
+    - run: echo Hello $DC_USER
+    - run: docker run --rm hello-world
+    
+    # - id: random-number-generator
+    #   run: echo "::set-output name=random-number::$(echo $RANDOM)"
+    #   shell: bash
