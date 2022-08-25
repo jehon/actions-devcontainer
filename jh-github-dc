@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+
+set -o errexit
+
+#
+# Documentation:
+#  - Default env variables: https://docs.github.com/en/actions/learn-github-actions/environment-variables#default-environment-variables
+#  - Pseudo commands:       https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions
+#
+
+PRJ_NAME="$(basename "$GITHUB_REPOSITORY")"
+TAG_NAME="local"
+CONTAINER_NAME="devcontainer"
+DC_USER="${DC_USER:-root}"
+
+CMD="$1"
+CMD_ARG="$2"
+
+echo "******************************"
+echo "* _0:                $0"
+echo "* PRJ_NAME:          $PRJ_NAME"
+echo "* CONTAINER_NAME:    $CONTAINER_NAME"
+echo "* TAG_NAME:          $TAG_NAME"
+echo "* DC_USER:           $DC_USER"
+echo "* GITHUB_WORKSPACE:  $GITHUB_WORKSPACE"
+echo "* GITHUB_REPOSITORY: $GITHUB_REPOSITORY"
+echo "* "
+echo "* CMD [1]:           $CMD"
+echo "* CMD_ARG [2]:       $CMD_ARG"
+echo "******************************"
+
+case "$CMD" in
+"dump")
+    # Already done
+    true
+    ;;
+
+"start")
+    header_begin "Building the docker image '$TAG_NAME'"
+    docker build -t "$TAG_NAME" .
+    header_end
+
+    header_begin "Starting in the docker '$CONTAINER_NAME' from '$TAG_NAME'"
+    mkdir tmp/
+    docker run --name "$CONTAINER_NAME" --privileged --volume "$PWD:/workspaces/$PRJ_NAME" --workdir "/workspaces/$PRJ_NAME" "$TAG_NAME" sleep infinity >tmp/docker.log 2>&1
+    header_end
+
+    header_begin "Wait for docker to be ready"
+    /usr/bin/jh-docker-wait "$CONTAINER_NAME"
+    header_end
+    ;;
+
+"stop")
+    docker kill "$CONTAINER_NAME"
+    ;;
+
+"make")
+    header_begin "Make $CMD"
+    docker exec --user "$DC_USER" "$CONTAINER_NAME" make "$CMD_ARG"
+    header_end
+    ;;
+
+*)
+    jh_fatal "Unknown command: $CMD"
+    ;;
+
+esac

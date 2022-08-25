@@ -1,9 +1,14 @@
 name: 'devcontainer'
 description: 'Run in devcontainer'
 inputs:
-  dc-user:  # id of input
+  dc-user:
     description: 'Who run the commands'
     default: 'root'
+  action:
+    description: 'Action to be run'
+    required: true
+  make:
+    description: 'Make target to run'
 # outputs:
 #   random-number:
 #     description: "Random number"
@@ -11,13 +16,9 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: echo Hello $DC_USER
+    - run: ./jh-github-dc ${{ inputs.action }} ${{ inputs.make }}
       shell: bash
       env:
         DC_USER: ${{ inputs.dc-user }}
-    - run: docker run --rm hello-world
-      shell: bash
 
-    # - id: random-number-generator
     #   run: echo "::set-output name=random-number::$(echo $RANDOM)"
-    #   shell: bash
