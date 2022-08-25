@@ -1,6 +1,6 @@
 {
 	"name": "Alpine",
 	"build": {
-		"dockerfile": "../Dockerfile"
+		"dockerfile": "Dockerfile"
 	}
 }

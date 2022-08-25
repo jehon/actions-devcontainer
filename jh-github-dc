@@ -12,6 +12,8 @@ PRJ_NAME="$(basename "$GITHUB_REPOSITORY")"
 TAG_NAME="local"
 CONTAINER_NAME="devcontainer"
 DC_USER="${DC_USER:-root}"
+DOCKER_CONTEXT=".devcontainer/"
+DOCKER_STARTUP_DELAY=60
 
 CMD="$1"
 CMD_ARG="$2"
@@ -20,7 +22,7 @@ header_begin() {
     echo "$1..."
 }
 
-header_done() {
+header_end() {
     echo "...done"
 }
 
@@ -42,7 +44,7 @@ case "$CMD" in
 
 "start")
     header_begin "Building the docker image '$TAG_NAME'"
-    docker build -t "$TAG_NAME" .
+    docker build -t "$TAG_NAME" "$DOCKER_CONTEXT"
     header_end
 
     header_begin "Starting in the docker '$CONTAINER_NAME' from '$TAG_NAME'"
@@ -51,7 +53,17 @@ case "$CMD" in
     header_end
 
     header_begin "Wait for docker to be ready"
-    ./jh-docker-wait "$CONTAINER_NAME"
+    ((I = 1)) # If it was 0, it would fail the script
+    ((MAX = "$DOCKER_STARTUP_DELAY"))
+    while ! docker ps --filter "name=$CONTAINER_NAME" --filter "status=running" | grep "$CONTAINER_NAME" >/dev/null; do
+        sleep 1s
+        echo -n "."
+        ((I++))
+        ((I > MAX)) && (
+            echo "Waited $I and $CONTAINER_NAME times without success" >&2
+            exit 2
+        )
+    done
     header_end
     ;;
 
