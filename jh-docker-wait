@@ -2,9 +2,6 @@
 
 set -o errexit
 
-# shellcheck source=/usr/bin/jh-lib
-. jh-lib
-
 NAME="$1"
 MAX="${2:-60}"
 
@@ -17,7 +14,10 @@ while ! docker ps --filter "name=$NAME" --filter "status=running" | grep "$1" >/
     sleep 1s
     echo -n "."
     ((I++))
-    ((I > MAX)) && jh_fatal "Waited $I and $MAX times without success"
+    ((I > MAX)) && (
+        echo "Waited $I and $MAX times without success" >&2
+        exit 2
+    )
 done
 
 echo "Found docker $NAME"

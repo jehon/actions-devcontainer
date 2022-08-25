@@ -16,23 +16,28 @@ DC_USER="${DC_USER:-root}"
 CMD="$1"
 CMD_ARG="$2"
 
-echo "******************************"
-echo "* _0:                $0"
-echo "* PRJ_NAME:          $PRJ_NAME"
-echo "* CONTAINER_NAME:    $CONTAINER_NAME"
-echo "* TAG_NAME:          $TAG_NAME"
-echo "* DC_USER:           $DC_USER"
-echo "* GITHUB_WORKSPACE:  $GITHUB_WORKSPACE"
-echo "* GITHUB_REPOSITORY: $GITHUB_REPOSITORY"
-echo "* "
-echo "* CMD [1]:           $CMD"
-echo "* CMD_ARG [2]:       $CMD_ARG"
-echo "******************************"
+header_begin() {
+    echo "$1..."
+}
+
+header_done() {
+    echo "...done"
+}
 
 case "$CMD" in
 "dump")
-    # Already done
-    true
+    echo "******************************"
+    echo "* _0:                $0"
+    echo "* PRJ_NAME:          $PRJ_NAME"
+    echo "* CONTAINER_NAME:    $CONTAINER_NAME"
+    echo "* TAG_NAME:          $TAG_NAME"
+    echo "* DC_USER:           $DC_USER"
+    echo "* GITHUB_WORKSPACE:  $GITHUB_WORKSPACE"
+    echo "* GITHUB_REPOSITORY: $GITHUB_REPOSITORY"
+    echo "* "
+    echo "* CMD [1]:           $CMD"
+    echo "* CMD_ARG [2]:       $CMD_ARG"
+    echo "******************************"
     ;;
 
 "start")
@@ -61,7 +66,8 @@ case "$CMD" in
     ;;
 
 *)
-    jh_fatal "Unknown command: $CMD"
+    echo "Unknown command: $CMD" >&2
+    exit 1
     ;;
 
 esac
