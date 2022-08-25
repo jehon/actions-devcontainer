@@ -22,3 +22,11 @@ runs:
         DC_USER: ${{ inputs.dc-user }}
 
     #   run: echo "::set-output name=random-number::$(echo $RANDOM)"
+    
+    - name: Upload artifacts docker's logs
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: docker
+        path: tmp/docker.log
+        retention-days: 1
