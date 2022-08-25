@@ -16,7 +16,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: ./jh-github-dc ${{ inputs.action }} ${{ inputs.make }}
+    - run: ${{ github.action_path }}/jh-github-dc ${{ inputs.action }} ${{ inputs.make }}
       shell: bash
       env:
         DC_USER: ${{ inputs.dc-user }}
