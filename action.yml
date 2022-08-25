@@ -10,12 +10,14 @@ inputs:
 #     value: ${{ steps.random-number-generator.outputs.random-number }}
 runs:
   using: "composite"
-  env:
-    DC_USER: ${{ inputs.dc-user }}
   steps:
     - run: echo Hello $DC_USER
+      shell: bash
+      env:
+        DC_USER: ${{ inputs.dc-user }}
     - run: docker run --rm hello-world
-    
+      shell: bash
+
     # - id: random-number-generator
     #   run: echo "::set-output name=random-number::$(echo $RANDOM)"
     #   shell: bash
