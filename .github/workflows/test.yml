@@ -19,3 +19,12 @@ jobs:
     - uses: jehon/actions-devcontainer@main
       with:
         action: dump
+
+    - uses: jehon/actions-devcontainer@main
+      with:
+        action: start
+
+    - uses: jehon/actions-devcontainer@main
+      with:
+        action: make
+        make: dump
