@@ -44,13 +44,13 @@ case "$CMD" in
 
 "start")
     header_begin "Building the docker image '$TAG_NAME'"
-    docker build -t "$TAG_NAME" "$DOCKER_CONTEXT"
+    docker build --quiet -t "$TAG_NAME" "$DOCKER_CONTEXT"
     header_end
 
     header_begin "Starting in the docker '$CONTAINER_NAME' from '$TAG_NAME'"
+    mkdir -p tmp/
     (
         echo "Starting docker $TAG_NAME as $CONTAINER_NAME for project $PRJ_NAME"
-        mkdir tmp/
         docker run --name "$CONTAINER_NAME" --privileged --volume "$PWD:/workspaces/$PRJ_NAME" --workdir "/workspaces/$PRJ_NAME" "$TAG_NAME" sleep infinity &
     ) >tmp/docker.log 2>&1
     header_end
