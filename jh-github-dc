@@ -46,7 +46,7 @@ case "$CMD" in
     header_end
 
     header_begin "Wait for docker to be ready"
-    /usr/bin/jh-docker-wait "$CONTAINER_NAME"
+    ./jh-docker-wait "$CONTAINER_NAME"
     header_end
     ;;
 

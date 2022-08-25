@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+set -o errexit
+
+# shellcheck source=/usr/bin/jh-lib
+. jh-lib
+
+NAME="$1"
+MAX="${2:-60}"
+
+if [ -z "$NAME" ]; then
+    jh_fatal "You must specify username as [1]"
+fi
+
+((I = 1)) # If it was 0, it would fail the script
+while ! docker ps --filter "name=$NAME" --filter "status=running" | grep "$1" >/dev/null; do
+    sleep 1s
+    echo -n "."
+    ((I++))
+    ((I > MAX)) && jh_fatal "Waited $I and $MAX times without success"
+done
+
+echo "Found docker $NAME"
