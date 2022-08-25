@@ -24,9 +24,10 @@ runs:
     #   run: echo "::set-output name=random-number::$(echo $RANDOM)"
     
     - name: Upload artifacts docker's logs
-      if: always()
+      if: ${{ inputs.action == 'stop' }}
       uses: actions/upload-artifact@v3
       with:
         name: docker
         path: tmp/docker.log
+        if-no-files-found: ignore
         retention-days: 1

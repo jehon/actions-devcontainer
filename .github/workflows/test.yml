@@ -31,3 +31,8 @@ jobs:
       with:
         action: make
         make: dump
+
+    - name: stop
+      uses: jehon/actions-devcontainer@main
+      with:
+        action: stop
