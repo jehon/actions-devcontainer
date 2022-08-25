@@ -1,20 +1,20 @@
-name: 'devcontainer'
-description: 'Run in devcontainer'
+name: devcontainer
+description: Run in devcontainer
 inputs:
   dc-user:
-    description: 'Who run the commands'
-    default: 'root'
+    description: Who run the commands
+    default: root
   action:
-    description: 'Action to be run'
+    description: Action to be run
     required: true
   make:
-    description: 'Make target to run'
+    description: Make target to run
 # outputs:
 #   random-number:
 #     description: "Random number"
 #     value: ${{ steps.random-number-generator.outputs.random-number }}
 runs:
-  using: "composite"
+  using: composite
   steps:
     - run: ${{ github.action_path }}/jh-github-dc ${{ inputs.action }} ${{ inputs.make }}
       shell: bash
