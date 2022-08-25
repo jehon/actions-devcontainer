@@ -19,11 +19,13 @@ CMD="$1"
 CMD_ARG="$2"
 
 header_begin() {
+    echo "::group::{$1}"
     echo "$1..."
 }
 
 header_end() {
     echo "...done"
+    echo "::endgroup::"
 }
 
 case "$CMD" in
