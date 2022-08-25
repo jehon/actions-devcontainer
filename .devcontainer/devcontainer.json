@@ -2,5 +2,16 @@
 	"name": "Alpine",
 	"build": {
 		"dockerfile": "Dockerfile"
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"gruntfuggly.todo-tree",
+				"nobuhito.printcode",
+				"lizebang.bash-extension-pack",
+				"timonwong.shellcheck",
+				"labocho.chmod-command"
+			]
+		}
 	}
 }
