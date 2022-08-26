@@ -1,14 +1,20 @@
 {
-	"name": "Alpine",
+	"name": "Debian",
 	"build": {
 		"dockerfile": "Dockerfile"
 	},
+	"runArgs": [
+		"--init",
+		"--privileged"
+	],
+	"overrideCommand": false,
 	"customizations": {
 		"vscode": {
 			"extensions": [
 				"gruntfuggly.todo-tree",
 				"nobuhito.printcode",
 				"lizebang.bash-extension-pack",
+				"ms-azuretools.vscode-docker",
 				"timonwong.shellcheck",
 				"labocho.chmod-command"
 			]
