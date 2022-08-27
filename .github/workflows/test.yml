@@ -27,6 +27,11 @@ jobs:
       with:
         action: start
 
+    - name: check outputs
+      run: |
+        echo ${{ outputs.run.container }}
+        test -n "${{ outputs.run.container }}"
+
     - name: make dump
       uses: jehon/actions-devcontainer@main
       with:

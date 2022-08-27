@@ -9,19 +9,20 @@ inputs:
     required: true
   make:
     description: Make target to run
-# outputs:
-#   random-number:
-#     description: "Random number"
-#     value: ${{ steps.random-number-generator.outputs.random-number }}
+outputs:
+  container:
+    description: "Container name"
+    value: ${{ steps.run.outputs.container }}
 runs:
   using: composite
   steps:
-    - run: ${{ github.action_path }}/jh-github-dc ${{ inputs.action }} ${{ inputs.make }}
+    - id: run
+      run: |
+        . ${{ github.action_path }}/jh-github-dc ${{ inputs.action }} ${{ inputs.make }}
+        echo "::set-output name=random-number::${CONTAINER_NAME}"
       shell: bash
       env:
         DC_USER: ${{ inputs.dc-user }}
-
-    #   run: echo "::set-output name=random-number::$(echo $RANDOM)"
     
     - name: Upload artifacts docker's logs
       if: ${{ inputs.action == 'stop' }}
