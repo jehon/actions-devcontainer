@@ -83,7 +83,7 @@ case "$CMD" in
 
 "make")
     header_begin "Make $CMD"
-    docker exec --user "$DC_USER" "$CONTAINER_NAME" make "$CMD_ARG"
+    docker exec --user "$DC_USER" "$CONTAINER_NAME" make --debug "$CMD_ARG"
     header_end
     ;;
 
