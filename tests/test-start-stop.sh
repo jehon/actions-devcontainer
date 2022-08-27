@@ -7,6 +7,8 @@ set -o errexit
 
 R="$(dirname "$JH_SWD")/jh-github-dc"
 
+export DOCKER_STARTUP_DELAY=120
+
 header_begin "start"
 $R start
 header_end
