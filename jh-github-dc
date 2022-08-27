@@ -8,12 +8,14 @@ set -o errexit
 #  - Pseudo commands:       https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions
 #
 
-PRJ_NAME="$(basename "$GITHUB_REPOSITORY")"
-TAG_NAME="local"
-CONTAINER_NAME="devcontainer"
-DC_USER="${DC_USER:-root}"
-DOCKER_CONTEXT=".devcontainer/"
-DOCKER_STARTUP_DELAY=60
+: "${PRJ_NAME:=$(basename "$GITHUB_REPOSITORY")}"
+: "${IMAGE_NAME:=local}"
+: "${CONTAINER_NAME:=devcontainer}"
+: "${DC_USER:=root}"
+: "${DOCKER_CONTEXT:=.devcontainer/}"
+: "${DOCKER_STARTUP_DELAY:=60}"
+
+DOCKER_LOG="tmp/docker.log"
 
 CMD="$1"
 CMD_ARG="$2"
@@ -34,7 +36,7 @@ case "$CMD" in
     echo "* _0:                $0"
     echo "* PRJ_NAME:          $PRJ_NAME"
     echo "* CONTAINER_NAME:    $CONTAINER_NAME"
-    echo "* TAG_NAME:          $TAG_NAME"
+    echo "* IMAGE_NAME:          $IMAGE_NAME"
     echo "* GITHUB_WORKSPACE:  $GITHUB_WORKSPACE"
     echo "* GITHUB_REPOSITORY: $GITHUB_REPOSITORY"
     echo "* "
@@ -45,16 +47,17 @@ case "$CMD" in
     ;;
 
 "start")
-    header_begin "Building the docker image '$TAG_NAME'"
-    docker build --quiet -t "$TAG_NAME" "$DOCKER_CONTEXT"
+    rm "$DOCKER_LOG"
+    header_begin "Building the docker image '$IMAGE_NAME'"
+    docker build --quiet -t "$IMAGE_NAME" "$DOCKER_CONTEXT"
     header_end
 
-    header_begin "Starting in the docker '$CONTAINER_NAME' from '$TAG_NAME'"
+    header_begin "Starting in the docker '$CONTAINER_NAME' from '$IMAGE_NAME'"
     mkdir -p tmp/
     (
-        echo "Starting docker $TAG_NAME as $CONTAINER_NAME for project $PRJ_NAME"
-        docker run --name "$CONTAINER_NAME" --privileged --volume "$PWD:/workspaces/$PRJ_NAME" --workdir "/workspaces/$PRJ_NAME" "$TAG_NAME" sleep infinity &
-    ) >tmp/docker.log 2>&1
+        echo "Starting docker $IMAGE_NAME as $CONTAINER_NAME for project $PRJ_NAME"
+        docker run --name "$CONTAINER_NAME" --privileged --volume "$PWD:/workspaces/$PRJ_NAME" --workdir "/workspaces/$PRJ_NAME" "$IMAGE_NAME" sleep infinity &
+    ) >"$DOCKER_LOG" 2>&1
     header_end
 
     header_begin "Wait for docker to be ready"
@@ -73,7 +76,9 @@ case "$CMD" in
     ;;
 
 "stop")
-    docker kill "$CONTAINER_NAME"
+    docker kill "$CONTAINER_NAME" 2>/dev/null || true
+    docker rm "$CONTAINER_NAME" 2>/dev/null || true
+    docker image rm "$IMAGE_NAME" 2>/dev/null || true
     ;;
 
 "make")
