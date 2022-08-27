@@ -31,4 +31,3 @@ runs:
         name: docker
         path: tmp/docker.log
         if-no-files-found: ignore
-        retention-days: 1
