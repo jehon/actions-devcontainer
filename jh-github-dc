@@ -47,7 +47,7 @@ case "$CMD" in
     ;;
 
 "start")
-    rm "$DOCKER_LOG"
+    rm -f "$DOCKER_LOG"
     header_begin "Building the docker image '$IMAGE_NAME'"
     docker build --quiet -t "$IMAGE_NAME" "$DOCKER_CONTEXT"
     header_end
