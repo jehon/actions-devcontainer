@@ -30,6 +30,15 @@ header_end() {
     echo "::endgroup::"
 }
 
+ARGS=()
+if [ -n "$DC_ARGS0" ]; then
+    ARGS=("${ARGS[@]}" "$DC_ARGS0")
+fi
+
+if [ -n "$DC_ARGS1" ]; then
+    ARGS=("${ARGS[@]}" "$DC_ARGS1")
+fi
+
 case "$CMD" in
 "dump")
     echo "******************************"
@@ -43,6 +52,8 @@ case "$CMD" in
     echo "* DC_USER:           $DC_USER"
     echo "* CMD [1]:           $CMD"
     echo "* CMD_ARG [2]:       $CMD_ARG"
+    echo "* DC_ARGS0 [env]:    $DC_ARGS0"
+    echo "* DC_ARGS1 [env]:    $DC_ARGS1"
     echo "******************************"
     ;;
 
@@ -83,7 +94,7 @@ case "$CMD" in
 
 "make")
     header_begin "Make $CMD"
-    docker exec --user "$DC_USER" "$CONTAINER_NAME" make --debug "$CMD_ARG"
+    docker exec "${ARGS[@]}" --user "$DC_USER" "$CONTAINER_NAME" make --debug "$CMD_ARG"
     header_end
     ;;
 

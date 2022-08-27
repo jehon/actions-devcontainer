@@ -11,3 +11,11 @@ test: kill
 	find tests/ -name "*.sh" -exec "chmod" "+x" "{}" ";"
 	run-parts --verbose --regex "test-.*" ./tests
 	@echo "ok"
+
+# Test scripts
+
+hello:
+	echo "Do we have CUSTOM_ENV?"
+	env | grep CUSTOM_ENV
+	echo "Hello $(CUSTOM_ENV0)"
+

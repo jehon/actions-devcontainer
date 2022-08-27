@@ -38,6 +38,14 @@ jobs:
         action: make
         make: dump
 
+    - name: make hello (arguments)
+      uses: jehon/actions-devcontainer@main
+      with:
+        action: make
+        make: hello
+        dc-args0: "-e" 
+        dc-args1: "CUSTOM_ENV=Humans"
+
     - name: stop docker
       uses: jehon/actions-devcontainer@main
       with:
