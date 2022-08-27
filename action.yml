@@ -19,7 +19,7 @@ runs:
     - id: run
       run: |
         . ${{ github.action_path }}/jh-github-dc ${{ inputs.action }} ${{ inputs.make }}
-        echo "::set-output name=random-number::${CONTAINER_NAME}"
+        echo "::set-output name=container::${CONTAINER_NAME}"
       shell: bash
       env:
         DC_USER: ${{ inputs.dc-user }}
