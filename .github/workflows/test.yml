@@ -21,7 +21,8 @@ jobs:
       with:
         action: dump
 
-    - name: start docker
+    - id: start
+      name: start docker
       uses: jehon/actions-devcontainer@main
       with:
         action: start
