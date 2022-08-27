@@ -38,7 +38,7 @@ jobs:
         action: make
         make: dump
 
-    - name: stop
+    - name: stop docker
       uses: jehon/actions-devcontainer@main
       with:
         action: stop
