@@ -33,5 +33,5 @@ runs:
       uses: actions/upload-artifact@v3
       with:
         name: docker
-        path: tmp/docker.log
+        path: tmp/github/docker.log
         if-no-files-found: ignore
