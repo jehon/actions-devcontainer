@@ -15,7 +15,9 @@ set -o errexit
 : "${DOCKER_CONTEXT:=.devcontainer/}"
 : "${DOCKER_STARTUP_DELAY:=60}"
 
-DOCKER_LOG="tmp/docker.log"
+DC_TMP="tmp/github/"
+DC_LOG="$DC_TMP/docker.log"
+DC_BRIDGE="$DC_TMP/bridge"
 
 CMD="$1"
 CMD_ARG="$2"
@@ -44,14 +46,22 @@ case "$CMD" in
     echo "* CMD [1]:                $CMD"
     echo "* CMD_ARG [2]:            $CMD_ARG"
     echo "* "
+    echo "* DC_TMP:                 $DC_TMP"
+    echo "* DC_LOG:                 $DC_LOG"
+    echo "* DC_BRIDGE:              $DC_BRIDGE"
     echo "* GITHUB_STEP_SUMMARY:    $GITHUB_STEP_SUMMARY"
-    echo "* "
     echo "* "
     echo "******************************"
     ;;
 
 "start")
-    rm -f "$DOCKER_LOG"
+    header_begin "Set up the environment"
+    rm -f "$DC_TMP"
+    mkdir -p "$DC_TMP"
+    mkdir -p "$DC_BRIDGE"
+    touch "$DC_BRIDGE"/GITHUB_STEP_SUMMARY
+    header_end
+
     header_begin "Building the docker image '$IMAGE_NAME'"
     docker build --quiet -t "$IMAGE_NAME" "$DOCKER_CONTEXT"
     header_end
@@ -61,7 +71,7 @@ case "$CMD" in
     (
         echo "Starting docker $IMAGE_NAME as $CONTAINER_NAME for project $PRJ_NAME"
         docker run --name "$CONTAINER_NAME" --privileged --volume "$PWD:/workspaces/$PRJ_NAME" --workdir "/workspaces/$PRJ_NAME" "$IMAGE_NAME" sleep infinity &
-    ) >"$DOCKER_LOG" 2>&1
+    ) >"$DC_LOG" 2>&1
     header_end
 
     header_begin "Wait for docker to be ready"
@@ -83,12 +93,13 @@ case "$CMD" in
     docker kill "$CONTAINER_NAME" 2>/dev/null || true
     docker rm "$CONTAINER_NAME" 2>/dev/null || true
     docker image rm "$IMAGE_NAME" 2>/dev/null || true
+    cat "$DC_BRIDGE"/GITHUB_STEP_SUMMARY >>"$GITHUB_STEP_SUMMARY"
     ;;
 
 "make")
     header_begin "Make $CMD"
     docker exec --user "$DC_USER" \
-        -e GITHUB_STEP_SUMMARY="$GITHUB_STEP_SUMMARY" \
+        -e GITHUB_STEP_SUMMARY="$DC_BRIDGE/GITHUB_STEP_SUMMARY" \
         "$CONTAINER_NAME" \
         make --debug "$CMD_ARG"
     header_end

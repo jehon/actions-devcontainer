@@ -38,6 +38,12 @@ jobs:
         action: make
         make: dump
 
+    - name: make dc-summary
+      uses: jehon/actions-devcontainer@main
+      with:
+        action: make
+        make: dc-summary
+
     - name: stop docker
       uses: jehon/actions-devcontainer@main
       with:

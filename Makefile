@@ -11,3 +11,12 @@ test: kill
 	find tests/ -name "*.sh" -exec "chmod" "+x" "{}" ";"
 	run-parts --verbose --regex "test-.*" ./tests
 	@echo "ok"
+
+#
+#
+# Test for the test.yml workflow
+#
+#
+
+dc-summary:
+	echo "this is my summary" >> $(GITHUB_STEP_SUMMARY)
