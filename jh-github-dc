@@ -33,16 +33,20 @@ header_end() {
 case "$CMD" in
 "dump")
     echo "******************************"
-    echo "* _0:                $0"
-    echo "* PRJ_NAME:          $PRJ_NAME"
-    echo "* CONTAINER_NAME:    $CONTAINER_NAME"
-    echo "* IMAGE_NAME:          $IMAGE_NAME"
-    echo "* GITHUB_WORKSPACE:  $GITHUB_WORKSPACE"
-    echo "* GITHUB_REPOSITORY: $GITHUB_REPOSITORY"
+    echo "* _0:                     $0"
+    echo "* PRJ_NAME:               $PRJ_NAME"
+    echo "* CONTAINER_NAME:         $CONTAINER_NAME"
+    echo "* IMAGE_NAME:             $IMAGE_NAME"
+    echo "* GITHUB_WORKSPACE:       $GITHUB_WORKSPACE"
+    echo "* GITHUB_REPOSITORY:      $GITHUB_REPOSITORY"
     echo "* "
-    echo "* DC_USER:           $DC_USER"
-    echo "* CMD [1]:           $CMD"
-    echo "* CMD_ARG [2]:       $CMD_ARG"
+    echo "* DC_USER:                $DC_USER"
+    echo "* CMD [1]:                $CMD"
+    echo "* CMD_ARG [2]:            $CMD_ARG"
+    echo "* "
+    echo "* GITHUB_STEP_SUMMARY:    $GITHUB_STEP_SUMMARY"
+    echo "* "
+    echo "* "
     echo "******************************"
     ;;
 
@@ -83,7 +87,10 @@ case "$CMD" in
 
 "make")
     header_begin "Make $CMD"
-    docker exec --user "$DC_USER" "$CONTAINER_NAME" make --debug "$CMD_ARG"
+    docker exec --user "$DC_USER" \
+        -e GITHUB_STEP_SUMMARY="$GITHUB_STEP_SUMMARY" \
+        "$CONTAINER_NAME" \
+        make --debug "$CMD_ARG"
     header_end
     ;;
 
