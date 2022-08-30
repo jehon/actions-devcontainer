@@ -43,8 +43,7 @@ jobs:
       with:
         action: make
         make: dc-hello
-        dc-args0: "-e" 
-        dc-args1: "CUSTOM_ENV=Humans"
+        dc-env-0: CUSTOM_ENV_0=Humans
 
     - name: make dc-summary
       uses: jehon/actions-devcontainer@main

@@ -9,10 +9,14 @@ inputs:
     required: true
   make:
     description: Make target to run
-  dc-args0:
+  dc-arg-0:
     description: Additionnal arguments to the docker command
-  dc-args1:
+  dc-arg-1:
     description: Additionnal arguments to the docker command
+  dc-env-0:
+    description: Additionnal environment [0] to the docker command
+  dc-env-1: 
+    description: Additionnal environment [1] to the docker command
 outputs:
   container:
     description: "Container name"
@@ -27,6 +31,10 @@ runs:
       shell: bash
       env:
         DC_USER: ${{ inputs.dc-user }}
+        DC_ARG_0: ${{ inputs.dc-arg-0 }}
+        DC_ARG_1: ${{ inputs.dc-arg-1 }}
+        DC_ENV_0: ${{ inputs.dc-env-0 }}
+        DC_ENV_1: ${{ inputs.dc-env-1 }}
     
     - name: Upload artifacts docker's logs
       if: ${{ inputs.action == 'stop' }}

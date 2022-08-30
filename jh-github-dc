@@ -33,12 +33,20 @@ header_end() {
 }
 
 ARGS=()
-if [ -n "$DC_ARGS0" ]; then
-    ARGS=("${ARGS[@]}" "$DC_ARGS0")
+if [ -n "$DC_ARG_0" ]; then
+    ARGS=("${ARGS[@]}" "$DC_ARG_0")
 fi
 
-if [ -n "$DC_ARGS1" ]; then
-    ARGS=("${ARGS[@]}" "$DC_ARGS1")
+if [ -n "$DC_ARG_1" ]; then
+    ARGS=("${ARGS[@]}" "$DC_ARG_1")
+fi
+
+if [ -n "$DC_ENV_0" ]; then
+    ARGS=("${ARGS[@]}" "-e" "$DC_ENV_0")
+fi
+
+if [ -n "$DC_ENV_1" ]; then
+    ARGS=("${ARGS[@]}" "-e" "$DC_ENV_1")
 fi
 
 case "$CMD" in
@@ -54,8 +62,11 @@ case "$CMD" in
     echo "* DC_USER:                $DC_USER"
     echo "* CMD [1]:                $CMD"
     echo "* CMD_ARG [2]:            $CMD_ARG"
-    echo "* DC_ARGS0 [env]:    $DC_ARGS0"
-    echo "* DC_ARGS1 [env]:    $DC_ARGS1"
+    echo "* ARGS:                   ${ARGS[*]}"
+    echo "* DC_ARG_0 [env]:         $DC_ARG_0"
+    echo "* DC_ARG_1 [env]:         $DC_ARG_1"
+    echo "* DC_ENV_0 [env]:         $DC_ENV_0"
+    echo "* DC_ENV_1 [env]:         $DC_ENV_1"
     echo "* "
     echo "* DC_TMP:                 $DC_TMP"
     echo "* DC_LOG:                 $DC_LOG"
