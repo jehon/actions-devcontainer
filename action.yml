@@ -9,6 +9,10 @@ inputs:
     required: true
   make:
     description: Make target to run
+  dc-args0:
+    description: Additionnal arguments to the docker command
+  dc-args1:
+    description: Additionnal arguments to the docker command
 outputs:
   container:
     description: "Container name"

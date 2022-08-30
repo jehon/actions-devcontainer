@@ -12,6 +12,7 @@ test: kill
 	run-parts --verbose --regex "test-.*" ./tests
 	@echo "ok"
 
+
 #
 #
 # Test for the test.yml workflow
@@ -20,3 +21,8 @@ test: kill
 
 dc-summary:
 	echo "this is my summary" >> $(GITHUB_STEP_SUMMARY)
+
+dc-hello:
+	echo "Do we have CUSTOM_ENV?"
+	env | grep CUSTOM_ENV
+	echo "Hello $(CUSTOM_ENV0)"
