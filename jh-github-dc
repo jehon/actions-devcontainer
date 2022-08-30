@@ -49,6 +49,14 @@ if [ -n "$DC_ENV_1" ]; then
     ARGS=("${ARGS[@]}" "-e" "$DC_ENV_1")
 fi
 
+if [ -n "$DC_ENV_2" ]; then
+    ARGS=("${ARGS[@]}" "-e" "$DC_ENV_2")
+fi
+
+if [ -n "$DC_ENV_3" ]; then
+    ARGS=("${ARGS[@]}" "-e" "$DC_ENV_3")
+fi
+
 case "$CMD" in
 "dump")
     echo "******************************"
@@ -67,6 +75,8 @@ case "$CMD" in
     echo "* DC_ARG_1 [env]:         $DC_ARG_1"
     echo "* DC_ENV_0 [env]:         $DC_ENV_0"
     echo "* DC_ENV_1 [env]:         $DC_ENV_1"
+    echo "* DC_ENV_2 [env]:         $DC_ENV_2"
+    echo "* DC_ENV_3 [env]:         $DC_ENV_3"
     echo "* "
     echo "* DC_TMP:                 $DC_TMP"
     echo "* DC_LOG:                 $DC_LOG"

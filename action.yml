@@ -15,8 +15,12 @@ inputs:
     description: Additionnal arguments to the docker command
   dc-env-0:
     description: Additionnal environment [0] to the docker command
-  dc-env-1: 
+  dc-env-1:
     description: Additionnal environment [1] to the docker command
+  dc-env-2:
+    description: Additionnal environment [2] to the docker command
+  dc-env-3:
+    description: Additionnal environment [3] to the docker command
 outputs:
   container:
     description: "Container name"
@@ -35,6 +39,8 @@ runs:
         DC_ARG_1: ${{ inputs.dc-arg-1 }}
         DC_ENV_0: ${{ inputs.dc-env-0 }}
         DC_ENV_1: ${{ inputs.dc-env-1 }}
+        DC_ENV_2: ${{ inputs.dc-env-2 }}
+        DC_ENV_3: ${{ inputs.dc-env-3 }}
     
     - name: Upload artifacts docker's logs
       if: ${{ inputs.action == 'stop' }}
