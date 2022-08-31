@@ -49,3 +49,11 @@ runs:
         name: docker
         path: tmp/github/docker.log
         if-no-files-found: ignore
+
+    - name: Upload setup log
+      if: ${{ inputs.action == 'stop' }}
+      uses: actions/upload-artifact@v3
+      with:
+        name: setup-logs
+        path: /setup/log
+        if-no-files-found: ignore
