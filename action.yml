@@ -55,5 +55,5 @@ runs:
       uses: actions/upload-artifact@v3
       with:
         name: setup-logs
-        path: /setup/log
+        path: tmp/dc-log
         if-no-files-found: ignore

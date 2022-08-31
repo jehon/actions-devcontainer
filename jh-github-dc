@@ -109,6 +109,7 @@ case "$CMD" in
 
     header_begin "Starting in the docker '$CONTAINER_NAME' from '$IMAGE_NAME'"
     mkdir -p tmp/
+    mkdir -p tmp/dc-log
     (
         echo "Starting docker $IMAGE_NAME as $CONTAINER_NAME for project $PRJ_NAME"
         docker run --name "$CONTAINER_NAME" --privileged \
@@ -135,10 +136,14 @@ case "$CMD" in
     ;;
 
 "stop")
+    docker container cp "$CONTAINER_NAME:/setup/log" tmp/dc-log
+    ls -al tmp/dc-log
+
     docker kill "$CONTAINER_NAME" 2>/dev/null || true
     docker rm "$CONTAINER_NAME" 2>/dev/null || true
     docker image rm "$IMAGE_NAME" 2>/dev/null || true
     cat "$DC_BRIDGE"/GITHUB_STEP_SUMMARY >>"$GITHUB_STEP_SUMMARY"
+
     ;;
 
 "make")
