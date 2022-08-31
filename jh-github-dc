@@ -32,7 +32,11 @@ header_end() {
     echo "::endgroup::"
 }
 
-ARGS=()
+ARGS=(
+    --env "CI=1"
+    --env GITHUB_STEP_SUMMARY="$DC_BRIDGE/GITHUB_STEP_SUMMARY"
+)
+
 if [ -n "$DC_ARG_0" ]; then
     ARGS=("${ARGS[@]}" "$DC_ARG_0")
 fi
@@ -103,9 +107,9 @@ case "$CMD" in
     (
         echo "Starting docker $IMAGE_NAME as $CONTAINER_NAME for project $PRJ_NAME"
         docker run --name "$CONTAINER_NAME" --privileged \
-            --env CI=1 \
             --volume "$PWD:/workspaces/$PRJ_NAME" \
             --workdir "/workspaces/$PRJ_NAME" \
+            "${ARGS[@]}" \
             "$IMAGE_NAME" sleep infinity &
     ) >"$DC_LOG" 2>&1
     header_end
@@ -135,8 +139,6 @@ case "$CMD" in
 "make")
     header_begin "Make $CMD"
     docker exec --user "$DC_USER" \
-        --env CI=1 \
-        --env GITHUB_STEP_SUMMARY="$DC_BRIDGE/GITHUB_STEP_SUMMARY" \
         "${ARGS[@]}" \
         "$CONTAINER_NAME" \
         make --debug "$CMD_ARG"
