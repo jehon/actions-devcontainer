@@ -18,6 +18,7 @@ set -o errexit
 DC_TMP="tmp/github/"
 DC_LOG="$DC_TMP/docker.log"
 DC_BRIDGE="$DC_TMP/bridge"
+DC_ENV_FILE="$DOCKER_CONTEXT/actions-devcontainer.env"
 
 CMD="$1"
 CMD_ARG="$2"
@@ -36,6 +37,10 @@ ARGS=(
     --env "CI=1"
     --env GITHUB_STEP_SUMMARY="$DC_BRIDGE/GITHUB_STEP_SUMMARY"
 )
+
+if [ -r "$DC_ENV_FILE" ]; then
+    ARGS=("${ARGS[@]}" --env-file "$DC_ENV_FILE")
+fi
 
 if [ -n "$DC_ARG_0" ]; then
     ARGS=("${ARGS[@]}" "$DC_ARG_0")

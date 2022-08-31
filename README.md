@@ -12,3 +12,8 @@ https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-
 ## Upload artifacts:
 
 https://github.com/actions/upload-artifact
+
+## Special files
+
+Env file:
+    $DOCKER_CONTEXT/actions-devcontainer.env
