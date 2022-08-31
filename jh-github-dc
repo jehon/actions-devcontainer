@@ -15,8 +15,8 @@ set -o errexit
 : "${DOCKER_CONTEXT:=.devcontainer/}"
 : "${DOCKER_STARTUP_DELAY:=60}"
 
-DC_TMP="tmp/github/"
-DC_LOG="$DC_TMP/docker.log"
+DC_TMP="tmp/dc/"
+DC_LOGS="$DC_TMP/log"
 DC_BRIDGE="$DC_TMP/bridge"
 DC_ENV_FILE="$DOCKER_CONTEXT/actions-devcontainer.env"
 
@@ -88,7 +88,7 @@ case "$CMD" in
     echo "* DC_ENV_3 [env]:         $DC_ENV_3"
     echo "* "
     echo "* DC_TMP:                 $DC_TMP"
-    echo "* DC_LOG:                 $DC_LOG"
+    echo "* DC_LOGS:                $DC_LOGS"
     echo "* DC_BRIDGE:              $DC_BRIDGE"
     echo "* GITHUB_STEP_SUMMARY:    $GITHUB_STEP_SUMMARY"
     echo "* "
@@ -99,6 +99,7 @@ case "$CMD" in
     header_begin "Set up the environment"
     rm -f "$DC_TMP"
     mkdir -p "$DC_TMP"
+    mkdir -p "$DC_LOGS"
     mkdir -p "$DC_BRIDGE"
     touch "$DC_BRIDGE"/GITHUB_STEP_SUMMARY
     header_end
@@ -109,7 +110,6 @@ case "$CMD" in
 
     header_begin "Starting in the docker '$CONTAINER_NAME' from '$IMAGE_NAME'"
     mkdir -p tmp/
-    mkdir -p tmp/dc-log
     (
         echo "Starting docker $IMAGE_NAME as $CONTAINER_NAME for project $PRJ_NAME"
         docker run --name "$CONTAINER_NAME" --privileged \
@@ -117,7 +117,7 @@ case "$CMD" in
             --workdir "/workspaces/$PRJ_NAME" \
             "${ARGS[@]}" \
             "$IMAGE_NAME" sleep infinity &
-    ) >"$DC_LOG" 2>&1
+    ) >"$DC_LOGS/docker.log" 2>&1
     header_end
 
     header_begin "Wait for docker to be ready"
@@ -136,8 +136,7 @@ case "$CMD" in
     ;;
 
 "stop")
-    docker container cp "$CONTAINER_NAME:/setup/log" tmp/dc-log
-    ls -al tmp/dc-log
+    docker container cp "$CONTAINER_NAME:/setup/log" "$DC_LOGS/"
 
     docker kill "$CONTAINER_NAME" 2>/dev/null || true
     docker rm "$CONTAINER_NAME" 2>/dev/null || true

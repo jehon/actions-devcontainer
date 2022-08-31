@@ -42,18 +42,10 @@ runs:
         DC_ENV_2: ${{ inputs.dc-env-2 }}
         DC_ENV_3: ${{ inputs.dc-env-3 }}
     
-    - name: Upload artifacts docker's logs
+    - name: Upload dc log
       if: ${{ inputs.action == 'stop' }}
       uses: actions/upload-artifact@v3
       with:
-        name: docker
-        path: tmp/github/docker.log
-        if-no-files-found: ignore
-
-    - name: Upload setup log
-      if: ${{ inputs.action == 'stop' }}
-      uses: actions/upload-artifact@v3
-      with:
-        name: setup-logs
-        path: tmp/dc-log
+        name: dc-logs
+        path: tmp/dc/log
         if-no-files-found: ignore
