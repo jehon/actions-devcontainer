@@ -8,7 +8,7 @@ set -o errexit
 #  - Pseudo commands:       https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions
 #
 
-: "${DC_TMP:tmp/dc}"
+: "${DC_TMP:='tmp/dc'}"
 : "${PRJ_NAME:=$(basename "$GITHUB_REPOSITORY")}"
 : "${IMAGE_NAME:=local}"
 : "${CONTAINER_NAME:=devcontainer}"
