@@ -32,6 +32,10 @@ header_end() {
     echo "::endgroup::"
 }
 
+docker_exec() {
+    docker exec "${ARGS[@]}" "$CONTAINER_NAME" "$@"
+}
+
 ARGS=(
     --env "CI=1"
     --env GITHUB_STEP_SUMMARY="$DC_BRIDGE/GITHUB_STEP_SUMMARY"
@@ -149,9 +153,7 @@ case "$CMD" in
 
 "make")
     header_begin "Make $CMD"
-    docker exec "${ARGS[@]}" \
-        "$CONTAINER_NAME" \
-        make --debug "$CMD_ARG"
+    docker_exec make --debug "$CMD_ARG"
     header_end
     ;;
 
