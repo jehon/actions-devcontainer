@@ -143,6 +143,7 @@ case "$CMD" in
     ;;
 
 "stop")
+    docker_exec env >"$DC_LOGS/env.log"
     docker container cp "$CONTAINER_NAME:/setup/log" "$DC_LOGS/"
 
     docker kill "$CONTAINER_NAME" 2>/dev/null || true
