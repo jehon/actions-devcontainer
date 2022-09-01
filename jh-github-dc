@@ -151,7 +151,7 @@ case "$CMD" in
 
 "make")
     header_begin "Make $CMD"
-    docker_exec make --debug "$CMD_ARG"
+    docker_exec make --debug "$CMD_ARG" 2>&1
     header_end
     ;;
 
