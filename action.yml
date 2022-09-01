@@ -41,6 +41,7 @@ runs:
         DC_ENV_1: ${{ inputs.dc-env-1 }}
         DC_ENV_2: ${{ inputs.dc-env-2 }}
         DC_ENV_3: ${{ inputs.dc-env-3 }}
+        DC_TMP: tmp/dc
     
     - name: Upload dc log
       if: ${{ inputs.action == 'stop' }}
