@@ -47,5 +47,5 @@ runs:
       uses: actions/upload-artifact@v3
       with:
         name: dc-logs
-        path: tmp/dc/log
+        path: tmp/dc
         if-no-files-found: ignore
