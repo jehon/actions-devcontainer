@@ -11,7 +11,6 @@ set -o errexit
 : "${PRJ_NAME:=$(basename "$GITHUB_REPOSITORY")}"
 : "${IMAGE_NAME:=local}"
 : "${CONTAINER_NAME:=devcontainer}"
-: "${DC_USER:=root}"
 : "${DOCKER_CONTEXT:=.devcontainer/}"
 : "${DOCKER_STARTUP_DELAY:=60}"
 
@@ -37,6 +36,10 @@ ARGS=(
     --env "CI=1"
     --env GITHUB_STEP_SUMMARY="$DC_BRIDGE/GITHUB_STEP_SUMMARY"
 )
+
+if [ -n "$DC_USER" ]; then
+    ARGS=("${ARGS[@]}" --user "$DC_USER")
+fi
 
 if [ -r "$DC_ENV_FILE" ]; then
     ARGS=("${ARGS[@]}" --env-file "$DC_ENV_FILE")
@@ -142,13 +145,11 @@ case "$CMD" in
     docker rm "$CONTAINER_NAME" 2>/dev/null || true
     docker image rm "$IMAGE_NAME" 2>/dev/null || true
     cat "$DC_BRIDGE"/GITHUB_STEP_SUMMARY >>"$GITHUB_STEP_SUMMARY"
-
     ;;
 
 "make")
     header_begin "Make $CMD"
-    docker exec --user "$DC_USER" \
-        "${ARGS[@]}" \
+    docker exec "${ARGS[@]}" \
         "$CONTAINER_NAME" \
         make --debug "$CMD_ARG"
     header_end
