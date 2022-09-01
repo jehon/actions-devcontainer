@@ -137,7 +137,7 @@ case "$CMD" in
 
 "stop")
     docker_exec env >"$DC_TMP/env.log"
-    docker container cp "$CONTAINER_NAME:/setup/log/*" "$DC_TMP/"
+    docker container cp "$CONTAINER_NAME:/setup/log/." "$DC_TMP/"
 
     docker kill "$CONTAINER_NAME" 2>/dev/null || true
     docker rm "$CONTAINER_NAME" 2>/dev/null || true
