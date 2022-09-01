@@ -37,7 +37,6 @@ docker_exec() {
 }
 
 ARGS=(
-    --env "CI=1"
     --env GITHUB_STEP_SUMMARY="$DC_BRIDGE/GITHUB_STEP_SUMMARY"
 )
 
