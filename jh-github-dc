@@ -158,7 +158,10 @@ case "$CMD" in
 "make")
     docker_exec make --debug "$CMD_ARG" 2>&1
     ;;
-
+"shell")
+    shift
+    docker_exec make --debug "$@" 2>&1
+    ;;
 *)
     echo "Unknown command: $CMD" >&2
     exit 1
