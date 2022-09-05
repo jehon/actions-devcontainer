@@ -4,7 +4,7 @@ dump:
 
 kill:
 	@echo "* Clean up old container..."
-	./jh-github-dc stop
+	./jh-github-dc stop 2>/dev/null >/dev/null || true
 	@echo "* ...done"
 
 test: kill
