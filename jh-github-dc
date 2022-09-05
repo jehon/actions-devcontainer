@@ -8,7 +8,7 @@ set -o errexit
 #  - Pseudo commands:       https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions
 #
 
-: "${DC_TMP:='tmp/dc'}"
+: "${DC_TMP:=tmp/dc}"
 : "${PRJ_NAME:=$(basename "$GITHUB_REPOSITORY")}"
 : "${IMAGE_NAME:=local}"
 : "${CONTAINER_NAME:=devcontainer}"
@@ -106,7 +106,7 @@ case "$CMD" in
 
 "start")
     header_begin "Set up the environment"
-    rm -f "$DC_TMP"
+    rm -fr "$DC_TMP"
     mkdir -p "$DC_TMP"
     touch "$DC_TMP"/GITHUB_STEP_SUMMARY
     header_end
