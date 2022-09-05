@@ -31,6 +31,10 @@ header_end() {
 }
 
 docker_exec() {
+    if ! docker ps -q | grep "$CONTAINER_NAME"; then
+        echo "Container is not running" >&2
+        exit 1
+    fi
     docker exec "${ARGS[@]}" "$CONTAINER_NAME" "$@"
 }
 
