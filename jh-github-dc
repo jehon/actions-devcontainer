@@ -31,11 +31,15 @@ header_end() {
 }
 
 docker_exec() {
-    if ! docker ps -q | grep "$CONTAINER_NAME"; then
+    if ! docker_is_running; then
         echo "Container is not running" >&2
         exit 1
     fi
     docker exec "${ARGS[@]}" "$CONTAINER_NAME" "$@"
+}
+
+docker_is_running() {
+    docker ps --filter "name=$CONTAINER_NAME" --filter "status=running" | grep "$CONTAINER_NAME" >/dev/null
 }
 
 ARGS=(
@@ -130,7 +134,7 @@ case "$CMD" in
     header_begin "Wait for docker to be ready"
     ((I = 1)) # If it was 0, it would fail the script
     ((MAX = "$DOCKER_STARTUP_DELAY"))
-    while ! docker ps --filter "name=$CONTAINER_NAME" --filter "status=running" | grep "$CONTAINER_NAME" >/dev/null; do
+    while ! docker_is_running; do
         sleep 1s
         echo -n "."
         ((I++))
