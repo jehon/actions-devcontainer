@@ -45,6 +45,11 @@ jobs:
         make: dc-hello
         dc-env-0: CUSTOM_ENV_0=Humans
 
+    - name: run ls /
+      uses: jehon/actions-devcontainer@main
+      with:
+        run: "ls /"
+
     - name: make dc-summary
       uses: jehon/actions-devcontainer@main
       with:
