@@ -16,3 +16,6 @@ R="$(dirname "$SWD")/jh-github-dc"
 
 export DOCKER_STARTUP_DELAY=120
 export R
+
+# Simulate github env
+export GITHUB_STEP_SUMMARY=tmp/GITHUB_STEP_SUMMARY.log
