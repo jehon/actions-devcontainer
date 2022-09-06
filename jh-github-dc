@@ -167,9 +167,9 @@ case "$CMD" in
     #   See https://stackoverflow.com/a/32576340/1954789
     docker container cp "$CONTAINER_NAME:/setup/log/." "$DC_TMP/" || true
 
-    docker kill "$CONTAINER_NAME" 2>/dev/null || true
-    docker rm "$CONTAINER_NAME" 2>/dev/null || true
-    docker image rm "$IMAGE_NAME" 2>/dev/null || true
+    docker kill "$CONTAINER_NAME" 2>/dev/null >/dev/null || true
+    docker rm "$CONTAINER_NAME" 2>/dev/null >/dev/null || true
+    docker image rm "$IMAGE_NAME" 2>/dev/null >/dev/null || true
     if [ -r "$DC_TMP"/GITHUB_STEP_SUMMARY ]; then
         cat "$DC_TMP"/GITHUB_STEP_SUMMARY >>"$GITHUB_STEP_SUMMARY"
     fi
