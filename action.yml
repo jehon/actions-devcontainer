@@ -7,8 +7,10 @@ inputs:
   action:
     description: Action to be run
     required: true
+  make:
+    description: OBSOLETE - Make target to run
   run:
-    description: Make target to run
+    description: Shell to run
   dc-arg-0:
     description: Additionnal arguments to the docker command
   dc-arg-1:
