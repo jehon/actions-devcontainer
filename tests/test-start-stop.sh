@@ -18,19 +18,23 @@ header_begin "start"
 $R start
 header_end
 
-header_begin "make dump"
+header_begin "make dump (legacy)"
 $R make dump
 header_end
 
-header_begin "make dc-hello"
+header_begin "run make dump"
+$R run "make dump"
+header_end
+
+header_begin "run make dc-hello"
 DC_ARGS0="-e" DC_ARGS1="CUSTOM_ENV=Human" $R run "make dc-hello"
 header_end
 
-header_begin "make dc-hello (2)"
+header_begin "run make dc-hello (2)"
 $R run "CUSTOM_ENV=Human make dc-hello"
 header_end
 
-header_begin "true"
+header_begin "run ls /"
 $R run "ls /"
 header_end
 

@@ -181,7 +181,7 @@ case "$CMD" in
 
     docker_exec make --debug "$CMD_ARG" 2>&1
     ;;
-"run" | "")
+"run")
     docker_exec bash -c "$CMD_ARG" 2>&1
     ;;
 

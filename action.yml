@@ -6,6 +6,7 @@ inputs:
     default: root
   action:
     description: Action to be run
+    default: run
   make: # TODO: remove 'make'
     description: OBSOLETE - Make target to run
   run:
