@@ -60,3 +60,6 @@ jobs:
       uses: jehon/actions-devcontainer@main
       with:
         action: stop
+
+    - name: test scripts
+      run: make test
