@@ -2,19 +2,7 @@
 
 set -o errexit
 
-SWD="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
-
-R="$(dirname "$SWD")/jh-github-dc"
-
-export DOCKER_STARTUP_DELAY=120
-
-header_begin() {
-    echo -n "*** $*..."
-}
-
-header_end() {
-    echo "... done"
-}
+. "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
 
 header_begin "start"
 $R start
