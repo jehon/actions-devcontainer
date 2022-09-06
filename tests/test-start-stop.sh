@@ -9,7 +9,7 @@ R="$(dirname "$SWD")/jh-github-dc"
 export DOCKER_STARTUP_DELAY=120
 
 header_begin() {
-    echo -n "$*..."
+    echo -n "*** $*..."
 }
 
 header_end() {
