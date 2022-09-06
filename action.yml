@@ -7,7 +7,7 @@ inputs:
   action:
     description: Action to be run
     required: true
-  make:
+  run:
     description: Make target to run
   dc-arg-0:
     description: Additionnal arguments to the docker command
@@ -30,7 +30,7 @@ runs:
   steps:
     - id: run
       run: |
-        . ${{ github.action_path }}/jh-github-dc ${{ inputs.action }} ${{ inputs.make }}
+        . ${{ github.action_path }}/jh-github-dc "${{ inputs.action }}" "${{ inputs.make }}"
         echo "::set-output name=container::${CONTAINER_NAME}"
       shell: bash
       env:
