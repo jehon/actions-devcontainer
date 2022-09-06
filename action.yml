@@ -6,7 +6,6 @@ inputs:
     default: root
   action:
     description: Action to be run
-    required: true
   make:
     description: OBSOLETE - Make target to run
   run:
