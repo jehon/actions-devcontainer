@@ -2,10 +2,9 @@
 
 set -o errexit
 
-# shellcheck source=/usr/bin/jh-lib
-. jh-lib
+SWD="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 
-R="$(dirname "$JH_SWD")/jh-github-dc"
+R="$(dirname "$SWD")/jh-github-dc"
 
 header_begin "native dump"
 $R dump

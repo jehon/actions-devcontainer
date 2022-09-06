@@ -2,7 +2,9 @@
 
 set -o errexit
 
-R="$(dirname "$JH_SWD")/jh-github-dc"
+SWD="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
+
+R="$(dirname "$SWD")/jh-github-dc"
 
 export DOCKER_STARTUP_DELAY=120
 
