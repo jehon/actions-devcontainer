@@ -25,14 +25,11 @@ if [ -n "$3" ]; then
     # At first, this is a warning, since we pass "args.make" as [3] to show this warning
     #
     echo "Received 3 arguments, expecting only 2" >&2
-    echo "Are you using 'make'?" >&2
     echo "1: $1" >&2
     echo "2: $2" >&2
     echo "3: $3" >&2
     echo "4: $4" >&2
-    if [ -n "$4" ]; then
-        exit 1
-    fi
+    exit 1
 fi
 
 header_begin() {
@@ -179,6 +176,9 @@ case "$CMD" in
     ;;
 
 "make")
+    # TODO: remove this command
+    echo "actions-devcontainer: still using legacy 'make' function for '$CMD_ARG'" | tee -a "$GITHUB_STEP_SUMMARY" >&2
+
     docker_exec make --debug "$CMD_ARG" 2>&1
     ;;
 "run" | "")

@@ -31,7 +31,7 @@ runs:
   steps:
     - id: run
       run: |
-        . ${{ github.action_path }}/jh-github-dc "${{ inputs.action }}" "${{ inputs.make }}${{ inputs.run }}" "${{ inputs.make }}"
+        . ${{ github.action_path }}/jh-github-dc "${{ inputs.action }}" "${{ inputs.make }}${{ inputs.run }}"
         echo "::set-output name=container::${CONTAINER_NAME}"
       shell: bash
       env:
