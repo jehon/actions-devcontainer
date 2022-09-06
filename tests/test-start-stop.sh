@@ -2,12 +2,17 @@
 
 set -o errexit
 
-# shellcheck source=/usr/bin/jh-lib
-. jh-lib
-
 R="$(dirname "$JH_SWD")/jh-github-dc"
 
 export DOCKER_STARTUP_DELAY=120
+
+header_begin() {
+    echo -n "$*..."
+}
+
+header_end() {
+    echo "... done"
+}
 
 header_begin "start"
 $R start
