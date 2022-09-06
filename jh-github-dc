@@ -20,6 +20,21 @@ DC_ENV_FILE="$DOCKER_CONTEXT/actions-devcontainer.env"
 CMD="$1"
 CMD_ARG="$2"
 
+if [ -n "$3" ]; then
+    #
+    # At first, this is a warning, since we pass "args.make" as [3] to show this warning
+    #
+    echo "Received 3 arguments, expecting only 2" >&2
+    echo "Are you using 'make'?" >&2
+    echo "1: $1" >&2
+    echo "2: $2" >&2
+    echo "3: $3" >&2
+    echo "4: $4" >&2
+    if [ -n "$4" ]; then
+        exit 1
+    fi
+fi
+
 header_begin() {
     echo "::group::{$1}"
     echo "$1..."
@@ -166,10 +181,11 @@ case "$CMD" in
 "make")
     docker_exec make --debug "$CMD_ARG" 2>&1
     ;;
-"shell")
-    shift
-    docker_exec make --debug "$@" 2>&1
+
+"run")
+    docker_exec bash -c "$CMD_ARG" 2>&1
     ;;
+
 *)
     echo "Unknown command: $CMD" >&2
     exit 1
