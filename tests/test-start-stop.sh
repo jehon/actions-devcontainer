@@ -5,6 +5,7 @@ set -o errexit
 . "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
 
 header_begin "start"
+$R stop || true
 $R start
 header_end
 
