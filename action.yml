@@ -1,9 +1,6 @@
 name: devcontainer
 description: Run in devcontainer
 inputs:
-  dc-user:
-    description: Who run the commands
-    default: root
   action:
     description: Action to be run
     default: run
@@ -11,18 +8,21 @@ inputs:
     description: OBSOLETE - Make target to run
   run:
     description: Shell to run
+  dc-user:
+    description: Who run the commands
+    default: root
   dc-arg-0:
     description: Additionnal arguments to the docker command
   dc-arg-1:
     description: Additionnal arguments to the docker command
   dc-env-0:
-    description: Additionnal environment [0] to the docker command
+    description: (legacy) Additionnal environment [0] to the docker command
   dc-env-1:
-    description: Additionnal environment [1] to the docker command
+    description: (legacy) Additionnal environment [1] to the docker command
   dc-env-2:
-    description: Additionnal environment [2] to the docker command
+    description: (legacy) Additionnal environment [2] to the docker command
   dc-env-3:
-    description: Additionnal environment [3] to the docker command
+    description: (legacy) Additionnal environment [3] to the docker command
 outputs:
   container:
     description: "Container name"
