@@ -18,10 +18,12 @@ $R run "make dump"
 header_end
 
 header_begin "run make dc-hello (DC_ENV_0)"
+DC_ENV_0="CUSTOM_ENV=Human" $R dump
 DC_ENV_0="CUSTOM_ENV=Human" $R run "make dc-hello"
 header_end
 
 header_begin "run make dc-hello (DC_ARGS)"
+DC_ARG_0="-e" DC_ARG_1="CUSTOM_ENV=Human" $R dump
 DC_ARG_0="-e" DC_ARG_1="CUSTOM_ENV=Human" $R run "make dc-hello"
 header_end
 
