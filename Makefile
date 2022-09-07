@@ -22,6 +22,6 @@ dc-summary:
 	echo "this is my summary" >> $(GITHUB_STEP_SUMMARY)
 
 dc-hello:
-	echo "Do we have CUSTOM_ENV_0 '$(CUSTOM_ENV_0)'?"
-	echo "Hello $(CUSTOM_ENV_0)"
-	env | grep CUSTOM_ENV_0
+	echo "Do we have CUSTOM_ENV '$(CUSTOM_ENV)'?"
+	echo "Hello $(CUSTOM_ENV)"
+	env | grep CUSTOM_ENV
