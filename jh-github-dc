@@ -15,8 +15,6 @@ set -o errexit
 : "${DOCKER_CONTEXT:=.devcontainer/}"
 : "${DOCKER_STARTUP_DELAY:=60}"
 
-DC_ENV_FILE="$DOCKER_CONTEXT/actions-devcontainer.env"
-
 CMD="$1"
 CMD_ARG="$2"
 
@@ -67,6 +65,7 @@ if [ -n "$DC_USER" ]; then
     ARGS=("${ARGS[@]}" --user "$DC_USER")
 fi
 
+DC_ENV_FILE="$DOCKER_CONTEXT/actions-devcontainer.env"
 if [ -r "$DC_ENV_FILE" ]; then
     ARGS=("${ARGS[@]}" --env-file "$DC_ENV_FILE")
 fi
