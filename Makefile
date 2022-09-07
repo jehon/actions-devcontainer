@@ -12,7 +12,6 @@ test: kill
 	run-parts --verbose --regex "test-.*" ./tests
 	@echo "ok"
 
-
 #
 #
 # Test for the test.yml workflow

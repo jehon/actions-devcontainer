@@ -31,3 +31,5 @@ header_end
 header_begin "stop"
 $R stop
 header_end
+
+echo "test-start-stop: ok"
