@@ -163,16 +163,25 @@ case "$CMD" in
     ;;
 
 "stop")
+    header_begin "Stopping container"
     # blabla/. copy the content of the folder
     #   See https://stackoverflow.com/a/32576340/1954789
     docker container cp "$CONTAINER_NAME:/setup/log/." "$DC_TMP/" || true
 
+    echo "Killing $CONTAINER_NAME"
     docker kill "$CONTAINER_NAME" 2>/dev/null >/dev/null || true
+
+    echo "Removing $CONTAINER_NAME"
     docker rm "$CONTAINER_NAME" 2>/dev/null >/dev/null || true
-    docker image rm "$IMAGE_NAME" 2>/dev/null >/dev/null || true
-    if [ -r "$DC_TMP"/GITHUB_STEP_SUMMARY ]; then
+
+    # echo "Removing image $IMAGE_NAME"
+    # docker image rm "$IMAGE_NAME" 2>/dev/null >/dev/null || true
+
+    if [ -n "$GITHUB_STEP_SUMMARY" ] && [ -r "$DC_TMP"/GITHUB_STEP_SUMMARY ]; then
+        echo "Saving summary"
         cat "$DC_TMP"/GITHUB_STEP_SUMMARY >>"$GITHUB_STEP_SUMMARY"
     fi
+    header_end
     ;;
 
 "make")
