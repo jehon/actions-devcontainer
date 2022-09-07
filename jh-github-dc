@@ -42,6 +42,11 @@ header_end() {
     echo "::endgroup::"
 }
 
+legacy() {
+    # TODO: remove all legacy calls
+    echo "actions-devcontainer: LEGACY $1 - please use $2 instead" | tee -a "$GITHUB_STEP_SUMMARY" >&2
+}
+
 docker_exec() {
     if ! docker_is_running; then
         echo "Container is not running" >&2
@@ -75,18 +80,22 @@ if [ -n "$DC_ARG_1" ]; then
 fi
 
 if [ -n "$DC_ENV_0" ]; then
+    legacy "DC_ENV_0 ($DC_ENV_0)" "$DC_ENV_0 $CMD_ARG"
     ARGS=("${ARGS[@]}" "--env" "$DC_ENV_0")
 fi
 
 if [ -n "$DC_ENV_1" ]; then
+    legacy "DC_ENV_1 ($DC_ENV_1)" "$DC_ENV_1 $CMD_ARG"
     ARGS=("${ARGS[@]}" "--env" "$DC_ENV_1")
 fi
 
 if [ -n "$DC_ENV_2" ]; then
+    legacy "DC_ENV_2 ($DC_ENV_2)" "$DC_ENV_2 $CMD_ARG"
     ARGS=("${ARGS[@]}" "--env" "$DC_ENV_2")
 fi
 
 if [ -n "$DC_ENV_3" ]; then
+    legacy "DC_ENV_3 ($DC_ENV_3)" "$DC_ENV_3 $CMD_ARG"
     ARGS=("${ARGS[@]}" "--env" "$DC_ENV_3")
 fi
 
@@ -109,10 +118,10 @@ case "$CMD" in
     echo "* ARGS:                   ${ARGS[*]}"
     echo "* DC_ARG_0 [env]:         $DC_ARG_0"
     echo "* DC_ARG_1 [env]:         $DC_ARG_1"
-    echo "* DC_ENV_0 [env]:         $DC_ENV_0"
-    echo "* DC_ENV_1 [env]:         $DC_ENV_1"
-    echo "* DC_ENV_2 [env]:         $DC_ENV_2"
-    echo "* DC_ENV_3 [env]:         $DC_ENV_3"
+    echo "! DC_ENV_0 [env]:         $DC_ENV_0"
+    echo "! DC_ENV_1 [env]:         $DC_ENV_1"
+    echo "! DC_ENV_2 [env]:         $DC_ENV_2"
+    echo "! DC_ENV_3 [env]:         $DC_ENV_3"
     echo "* "
     echo "* DC_TMP:                 $DC_TMP"
     echo "* GITHUB_STEP_SUMMARY:    $GITHUB_STEP_SUMMARY"
@@ -185,9 +194,7 @@ case "$CMD" in
     ;;
 
 "make")
-    # TODO: remove this command
-    echo "actions-devcontainer: still using legacy 'make' function for '$CMD_ARG'" | tee -a "$GITHUB_STEP_SUMMARY" >&2
-
+    legacy "command make ($CMD_ARG)" "run: 'make $CMD_ARG'"
     docker_exec make --debug "$CMD_ARG" 2>&1
     ;;
 "run")
