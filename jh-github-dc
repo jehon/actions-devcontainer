@@ -58,7 +58,7 @@ docker_is_running() {
 }
 
 ARGS=(
-    --env GITHUB_STEP_SUMMARY="$DC_TMP/GITHUB_STEP_SUMMARY"
+    --env GITHUB_STEP_SUMMARY="$DC_TMP/GITHUB_STEP_SUMMARY.txt"
 )
 
 if [ -n "$DC_USER" ]; then
@@ -132,7 +132,7 @@ case "$CMD" in
     header_begin "Set up the environment"
     rm -fr "$DC_TMP"
     mkdir -p "$DC_TMP"
-    touch "$DC_TMP"/GITHUB_STEP_SUMMARY
+    touch "$DC_TMP"/GITHUB_STEP_SUMMARY.txt
     header_end
 
     header_begin "Building the docker image '$IMAGE_NAME'"
@@ -185,9 +185,9 @@ case "$CMD" in
     # echo "Removing image $IMAGE_NAME"
     # docker image rm "$IMAGE_NAME" 2>/dev/null >/dev/null || true
 
-    if [ -n "$GITHUB_STEP_SUMMARY" ] && [ -r "$DC_TMP"/GITHUB_STEP_SUMMARY ]; then
+    if [ -n "$GITHUB_STEP_SUMMARY" ] && [ -r "$DC_TMP"/GITHUB_STEP_SUMMARY.txt ]; then
         echo "Saving summary"
-        cat "$DC_TMP"/GITHUB_STEP_SUMMARY >>"$GITHUB_STEP_SUMMARY"
+        cat "$DC_TMP"/GITHUB_STEP_SUMMARY.txt >>"$GITHUB_STEP_SUMMARY"
     fi
     header_end
     ;;
