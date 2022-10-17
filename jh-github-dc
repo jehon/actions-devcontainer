@@ -59,6 +59,7 @@ docker_is_running() {
 
 ARGS=(
     --env GITHUB_STEP_SUMMARY="$DC_TMP/GITHUB_STEP_SUMMARY.txt"
+    --env GITHUB_OUTPUT="$DC_TMP/GITHUB_OUTPUT.txt"
 )
 
 if [ -n "$DC_USER" ]; then
@@ -123,6 +124,7 @@ case "$CMD" in
     echo "! DC_ENV_3 [env]:         $DC_ENV_3"
     echo "* "
     echo "* DC_TMP:                 $DC_TMP"
+    echo "* GITHUB_OUTPUT:          $GITHUB_OUTPUT"
     echo "* GITHUB_STEP_SUMMARY:    $GITHUB_STEP_SUMMARY"
     echo "* "
     echo "******************************"
@@ -133,6 +135,7 @@ case "$CMD" in
     rm -fr "$DC_TMP"
     mkdir -p "$DC_TMP"
     touch "$DC_TMP"/GITHUB_STEP_SUMMARY.txt
+    touch "$DC_TMP"/GITHUB_OUTPUT.txt
     header_end
 
     header_begin "Building the docker image '$IMAGE_NAME'"
@@ -189,6 +192,12 @@ case "$CMD" in
         echo "Saving summary"
         cat "$DC_TMP"/GITHUB_STEP_SUMMARY.txt >>"$GITHUB_STEP_SUMMARY"
     fi
+
+    if [ -n "$GITHUB_OUTPUT" ] && [ -r "$DC_TMP"/GITHUB_OUTPUT.txt ]; then
+        echo "Saving output"
+        cat "$DC_TMP"/GITHUB_OUTPUT.txt >>"$GITHUB_OUTPUT"
+    fi
+
     header_end
     ;;
 
