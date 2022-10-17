@@ -1,16 +1,14 @@
 
-dump:
-	echo "Horray, we are in the devcontainer for a dump..."
+test: kill
+	find tests/ -name "*.sh" -exec "chmod" "+x" "{}" ";"
+	run-parts --verbose --regex "test-.*" ./tests
+	@echo "ok"
 
 kill:
 	@echo "* Clean up old container..."
 	./jh-github-dc stop 2>/dev/null >/dev/null || true
 	@echo "* ...done"
 
-test: kill
-	find tests/ -name "*.sh" -exec "chmod" "+x" "{}" ";"
-	run-parts --verbose --regex "test-.*" ./tests
-	@echo "ok"
 
 #
 #
@@ -25,3 +23,9 @@ dc-hello:
 	echo "Do we have CUSTOM_ENV '$(CUSTOM_ENV)'?"
 	echo "Hello $(CUSTOM_ENV)"
 	env | grep CUSTOM_ENV
+
+#
+# Test helpers
+#
+dump:
+	echo "Horray, we are in the devcontainer for a dump..."
