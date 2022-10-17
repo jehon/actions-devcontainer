@@ -67,6 +67,10 @@ mkdir -p "$DC_TMP"
 
 case "$CMD" in
 "dump")
+    echo "LEGACY"
+    ;;
+
+"start")
     echo "******************************"
     echo "* _0:                     $0"
     echo "* PRJ_NAME:               $PRJ_NAME"
@@ -87,9 +91,7 @@ case "$CMD" in
     echo "* GITHUB_STEP_SUMMARY:    $GITHUB_STEP_SUMMARY"
     echo "* "
     echo "******************************"
-    ;;
 
-"start")
     header_begin "Set up the environment"
     rm -fr "$DC_TMP"
     mkdir -p "$DC_TMP"
