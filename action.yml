@@ -19,7 +19,7 @@ runs:
     - id: run
       run: |
         . ${{ github.action_path }}/jh-github-dc "${{ inputs.action }}" "${{ inputs.run }}"
-        echo "::set-output name=container::${CONTAINER_NAME}"
+        echo "container='${CONTAINER_NAME}'" > "$GITHUB_OUTPUT"
       shell: bash
       env:
         DC_USER: ${{ inputs.dc-user }}
