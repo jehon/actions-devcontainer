@@ -4,25 +4,11 @@ inputs:
   action:
     description: Action to be run
     default: run
-  make: # TODO: remove 'make'
-    description: OBSOLETE - Make target to run
   run:
     description: Shell to run
   dc-user:
     description: Who run the commands
     default: root
-  dc-arg-0:
-    description: Additionnal arguments to the docker command
-  dc-arg-1:
-    description: Additionnal arguments to the docker command
-  dc-env-0:
-    description: (legacy) Additionnal environment [0] to the docker command
-  dc-env-1:
-    description: (legacy) Additionnal environment [1] to the docker command
-  dc-env-2:
-    description: (legacy) Additionnal environment [2] to the docker command
-  dc-env-3:
-    description: (legacy) Additionnal environment [3] to the docker command
 outputs:
   container:
     description: "Container name"
@@ -32,17 +18,11 @@ runs:
   steps:
     - id: run
       run: |
-        . ${{ github.action_path }}/jh-github-dc "${{ inputs.action }}" "${{ inputs.make }}${{ inputs.run }}"
+        . ${{ github.action_path }}/jh-github-dc "${{ inputs.action }}" "${{ inputs.run }}"
         echo "::set-output name=container::${CONTAINER_NAME}"
       shell: bash
       env:
         DC_USER: ${{ inputs.dc-user }}
-        DC_ARG_0: ${{ inputs.dc-arg-0 }}
-        DC_ARG_1: ${{ inputs.dc-arg-1 }}
-        DC_ENV_0: ${{ inputs.dc-env-0 }}
-        DC_ENV_1: ${{ inputs.dc-env-1 }}
-        DC_ENV_2: ${{ inputs.dc-env-2 }}
-        DC_ENV_3: ${{ inputs.dc-env-3 }}
         DC_TMP: tmp/dc
     
     - name: Upload dc log
