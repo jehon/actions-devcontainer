@@ -54,14 +54,6 @@ if [ -r "$DC_ENV_FILE" ]; then
     ARGS=("${ARGS[@]}" --env-file "$DC_ENV_FILE")
 fi
 
-if [ -n "$DC_ARG_0" ]; then
-    ARGS=("${ARGS[@]}" "$DC_ARG_0")
-fi
-
-if [ -n "$DC_ARG_1" ]; then
-    ARGS=("${ARGS[@]}" "$DC_ARG_1")
-fi
-
 # Needed by stop!
 mkdir -p "$DC_TMP"
 
@@ -83,9 +75,6 @@ case "$CMD" in
     echo "* CMD_ARG [2]:            $CMD_ARG"
     echo "* PARAM_USER:             $PARAM_USER"
     echo "* ARGS:                   ${ARGS[*]}"
-    echo "* DC_ARG_0 [env]:         $DC_ARG_0"
-    echo "* DC_ARG_1 [env]:         $DC_ARG_1"
-    echo "* "
     echo "* DC_TMP:                 $DC_TMP"
     echo "* GITHUB_OUTPUT:          $GITHUB_OUTPUT"
     echo "* GITHUB_STEP_SUMMARY:    $GITHUB_STEP_SUMMARY"
