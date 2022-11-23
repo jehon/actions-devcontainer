@@ -45,8 +45,8 @@ ARGS=(
     --env GITHUB_OUTPUT="$DC_TMP/GITHUB_OUTPUT.txt"
 )
 
-if [ -n "$DC_USER" ]; then
-    ARGS=("${ARGS[@]}" --user "$DC_USER")
+if [ -n "$PARAM_USER" ]; then
+    ARGS=("${ARGS[@]}" --user "$PARAM_USER")
 fi
 
 DC_ENV_FILE="$DOCKER_CONTEXT/actions-devcontainer.env"
@@ -79,9 +79,9 @@ case "$CMD" in
     echo "* GITHUB_WORKSPACE:       $GITHUB_WORKSPACE"
     echo "* GITHUB_REPOSITORY:      $GITHUB_REPOSITORY"
     echo "* "
-    echo "* DC_USER:                $DC_USER"
     echo "* CMD [1]:                $CMD"
     echo "* CMD_ARG [2]:            $CMD_ARG"
+    echo "* PARAM_USER:             $PARAM_USER"
     echo "* ARGS:                   ${ARGS[*]}"
     echo "* DC_ARG_0 [env]:         $DC_ARG_0"
     echo "* DC_ARG_1 [env]:         $DC_ARG_1"

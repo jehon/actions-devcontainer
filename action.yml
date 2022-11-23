@@ -22,8 +22,8 @@ runs:
         echo "container='${CONTAINER_NAME}'" > "$GITHUB_OUTPUT"
       shell: bash
       env:
-        DC_USER: ${{ inputs.dc-user }}
         DC_TMP: tmp/dc
+        PARAM_USER: ${{ inputs.dc-user }}
     
     - name: Upload dc log
       if: ${{ inputs.action == 'stop' }}
