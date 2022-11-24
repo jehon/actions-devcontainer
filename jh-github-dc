@@ -53,14 +53,14 @@ case "$CMD" in
     ;;
 
 "start")
-ARGS=(
-    --env GITHUB_STEP_SUMMARY="$DC_TMP/GITHUB_STEP_SUMMARY.txt"
-    --env GITHUB_OUTPUT="$DC_TMP/GITHUB_OUTPUT.txt"
-)
+    ARGS=(
+        --env GITHUB_STEP_SUMMARY="$DC_TMP/GITHUB_STEP_SUMMARY.txt"
+        --env GITHUB_OUTPUT="$DC_TMP/GITHUB_OUTPUT.txt"
+    )
 
-if [ -n "$PARAM_USER" ]; then
-    ARGS=("${ARGS[@]}" --user "$PARAM_USER")
-fi
+    if [ -n "$PARAM_USER" ]; then
+        ARGS=("${ARGS[@]}" --user "$PARAM_USER")
+    fi
 
 DC_ENV_FILE="$DOCKER_CONTEXT/actions-devcontainer.env"
 if [ -r "$DC_ENV_FILE" ]; then
