@@ -7,9 +7,6 @@
 		"--init",
 		"--privileged"
 	],
-	"mounts": [
-		"source=/root/.ssh,target=/root/.ssh,type=bind"
-	],
 	"overrideCommand": false,
 	"customizations": {
 		"vscode": {
