@@ -12,7 +12,7 @@ set -o errexit
 : "${PRJ_NAME:=$(basename "$GITHUB_REPOSITORY")}"
 : "${IMAGE_NAME:=local}"
 : "${CONTAINER_NAME:=devcontainer}"
-: "${DOCKER_CONTEXT:=.devcontainer/}"
+: "${BUILD_DIR:=.devcontainer/}" # Could not use DOCKER_CONTEXT, which is docker specific
 : "${DOCKER_STARTUP_DELAY:=60}"
 
 CMD="$1"
@@ -58,7 +58,7 @@ case "$CMD" in
         --env GITHUB_OUTPUT="$DC_TMP/GITHUB_OUTPUT.txt"
     )
 
-    DC_ENV_FILE="$DOCKER_CONTEXT/actions-devcontainer.env"
+    DC_ENV_FILE="$BUILD_DIR/actions-devcontainer.env"
     if [ -r "$DC_ENV_FILE" ]; then
         ARGS=("${ARGS[@]}" --env-file "$DC_ENV_FILE")
     fi
@@ -73,7 +73,7 @@ case "$CMD" in
     echo "* _0:                     $0"
     echo "* PRJ_NAME:               $PRJ_NAME"
     echo "* CONTAINER_NAME:         $CONTAINER_NAME"
-    echo "* DOCKER_CONTEXT:         $DOCKER_CONTEXT"
+    echo "* BUILD_DIR:              $BUILD_DIR"
     echo "* IMAGE_NAME:             $IMAGE_NAME"
     echo "* GITHUB_WORKSPACE:       $GITHUB_WORKSPACE"
     echo "* GITHUB_REPOSITORY:      $GITHUB_REPOSITORY"
@@ -100,7 +100,7 @@ case "$CMD" in
     header_end
 
     header_begin "Building the docker image '$IMAGE_NAME'"
-    docker build --quiet -t "$IMAGE_NAME" "$DOCKER_CONTEXT"
+    docker build --quiet -t "$IMAGE_NAME" "$BUILD_DIR"
     header_end
 
     header_begin "Starting in the docker '$CONTAINER_NAME' from '$IMAGE_NAME'"

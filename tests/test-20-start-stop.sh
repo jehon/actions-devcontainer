@@ -4,7 +4,8 @@ set -o errexit
 
 . "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
 
-export DOCKER_CONTEXT="$SWD"
+BUILD_DIR="$( realpath "$SWD" )"
+export BUILD_DIR
 
 header_begin "start"
 $R stop || true
