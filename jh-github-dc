@@ -19,13 +19,17 @@ CMD="$1"
 CMD_ARG="$2"
 
 header_begin() {
+    if [ -n "$CI" ]; then
     echo "::group::{$1}"
+    fi
     echo "$1..."
 }
 
 header_end() {
     echo "...done"
+    if [ -n "$CI" ]; then
     echo "::endgroup::"
+    fi
 }
 
 docker_exec() {
