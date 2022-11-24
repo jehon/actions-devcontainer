@@ -4,6 +4,8 @@ set -o errexit
 
 . "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
 
+export DOCKER_CONTEXT="$SWD"
+
 header_begin "start"
 $R stop || true
 $R start
