@@ -67,6 +67,8 @@ case "$CMD" in
         ARGS=("${ARGS[@]}" --user "$PARAM_USER")
     fi
 
+    ARGS=("${ARGS[@]}" --privileged)
+
     echo "******************************"
     echo "* _0:                     $0"
     echo "* PRJ_NAME:               $PRJ_NAME"
@@ -105,7 +107,7 @@ case "$CMD" in
     mkdir -p tmp/
     (
         echo "Starting docker $IMAGE_NAME as $CONTAINER_NAME for project $PRJ_NAME"
-        docker run --name "$CONTAINER_NAME" --privileged \
+        docker run --name "$CONTAINER_NAME" \
             --volume "$PWD:/workspaces/$PRJ_NAME" \
             --workdir "/workspaces/$PRJ_NAME" \
             "${ARGS[@]}" \
