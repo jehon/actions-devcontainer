@@ -11,12 +11,12 @@ $R stop || true
 $R start
 header_end
 
-header_begin "run make dc-hello (inline env)"
-$R run "CUSTOM_ENV=Human make dc-hello"
+header_begin "inside true (simple command)"
+$R run "true"
 header_end
 
-header_begin "run ls /"
-$R run "ls /"
+header_begin "inside 'false || true' (complex command)"
+$R run "false || true"
 header_end
 
 header_begin "stop"

@@ -20,7 +20,7 @@ CMD_ARG="$2"
 
 header_begin() {
     if [ -n "$CI" ]; then
-    echo "::group::{$1}"
+        echo "::group::{$1}"
     fi
     echo "$1..."
 }
@@ -28,7 +28,7 @@ header_begin() {
 header_end() {
     echo "...done"
     if [ -n "$CI" ]; then
-    echo "::endgroup::"
+        echo "::endgroup::"
     fi
 }
 
@@ -58,14 +58,14 @@ case "$CMD" in
         --env GITHUB_OUTPUT="$DC_TMP/GITHUB_OUTPUT.txt"
     )
 
+    DC_ENV_FILE="$DOCKER_CONTEXT/actions-devcontainer.env"
+    if [ -r "$DC_ENV_FILE" ]; then
+        ARGS=("${ARGS[@]}" --env-file "$DC_ENV_FILE")
+    fi
+
     if [ -n "$PARAM_USER" ]; then
         ARGS=("${ARGS[@]}" --user "$PARAM_USER")
     fi
-
-DC_ENV_FILE="$DOCKER_CONTEXT/actions-devcontainer.env"
-if [ -r "$DC_ENV_FILE" ]; then
-    ARGS=("${ARGS[@]}" --env-file "$DC_ENV_FILE")
-fi
 
     echo "******************************"
     echo "* _0:                     $0"

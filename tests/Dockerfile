@@ -1,2 +1,5 @@
 
-FROM jehon/devcontainer:latest
+FROM bash:latest
+# Need bash
+
+CMD [ "sleep", "infinity" ]

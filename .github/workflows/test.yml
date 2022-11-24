@@ -18,11 +18,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: native dump
-      uses: jehon/actions-devcontainer@main
-      with:
-        action: dump
-
     - id: start
       name: start docker
       uses: jehon/actions-devcontainer@main
@@ -34,20 +29,16 @@ jobs:
         echo ${{ steps.start.outputs.container }}
         test -n "${{ steps.start.outputs.container }}"
 
-    - name: run ls /
+    - name: "inside: true"
       uses: jehon/actions-devcontainer@main
       with:
-        run: "ls /"
+        run: "true"
 
-    - name: make dc-hello (inline)
+    - name: "inside: true || false"
       uses: jehon/actions-devcontainer@main
       with:
-        run: "CUSTOM_ENV_0=Humans make dc-hello"
+        run: "true || false"
 
-    - name: make dc-summary
-      uses: jehon/actions-devcontainer@main
-      with:
-        run: "make dc-summary"
 
     - name: stop docker
       uses: jehon/actions-devcontainer@main
