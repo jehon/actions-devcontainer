@@ -30,10 +30,10 @@ runs:
       env:
         DC_TMP: tmp/dc
         PARAM_USER: ${{ inputs.dc-user }}
-        PARAM_PRIVILEGED: ${{ inputs.privileged }}
-        PARAM_WITH_SOCKET: ${{ inputs.with-socket }}
+        PARAM_PRIVILEGED: ${{ (inputs.privileged ? 1 : '') }}
+        PARAM_WITH_SOCKET: ${{ (inputs.with-socket ? 1 : '') }}
         DEBUG:
-    
+
     - name: Upload dc log
       if: ${{ inputs.action == 'stop' }}
       uses: actions/upload-artifact@v3
