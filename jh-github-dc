@@ -78,7 +78,13 @@ case "$CMD" in
         ARGS=("${ARGS[@]}" --user "$PARAM_USER")
     fi
 
-    ARGS=("${ARGS[@]}" --privileged)
+    if is_true "$PARAM_PRIVILEGED" ; then
+        ARGS=("${ARGS[@]}" --privileged)
+    fi
+
+    if is_true "$PARAM_WITH_SOCKET" ; then
+        ARGS=("${ARGS[@]}" --mount "source=/var/run/docker.sock,dest=/var/run/docker.sock,type=bind")
+    fi
 
     echo "******************************"
     echo "* _0:                     $0"
