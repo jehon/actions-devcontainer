@@ -40,6 +40,15 @@ docker_is_running() {
     docker ps --filter "name=$CONTAINER_NAME" --filter "status=running" | grep "$CONTAINER_NAME" >/dev/null
 }
 
+# Needed by stop!
+mkdir -p "$DC_TMP"
+
+case "$CMD" in
+"dump")
+    echo "LEGACY"
+    ;;
+
+"start")
 ARGS=(
     --env GITHUB_STEP_SUMMARY="$DC_TMP/GITHUB_STEP_SUMMARY.txt"
     --env GITHUB_OUTPUT="$DC_TMP/GITHUB_OUTPUT.txt"
@@ -54,15 +63,6 @@ if [ -r "$DC_ENV_FILE" ]; then
     ARGS=("${ARGS[@]}" --env-file "$DC_ENV_FILE")
 fi
 
-# Needed by stop!
-mkdir -p "$DC_TMP"
-
-case "$CMD" in
-"dump")
-    echo "LEGACY"
-    ;;
-
-"start")
     echo "******************************"
     echo "* _0:                     $0"
     echo "* PRJ_NAME:               $PRJ_NAME"
