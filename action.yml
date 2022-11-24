@@ -9,6 +9,12 @@ inputs:
   dc-user:
     description: Who run the commands
     default: root
+  privileged:
+    description: (future) Should we run with the privileged flag?
+    default: true
+  with-socket:
+    description: (future) Do we mount the docker socket inside?
+    default: false
 outputs:
   container:
     description: "Container name"
@@ -24,6 +30,9 @@ runs:
       env:
         DC_TMP: tmp/dc
         PARAM_USER: ${{ inputs.dc-user }}
+        PARAM_PRIVILEGED: ${{ inputs.privileged }}
+        PARAM_WITH_SOCKET: ${{ inputs.with-socket }}
+        DEBUG:
     
     - name: Upload dc log
       if: ${{ inputs.action == 'stop' }}
