@@ -9,10 +9,6 @@ $R stop || true
 $R start
 header_end
 
-header_begin "run make dump"
-$R run "make dump"
-header_end
-
 header_begin "run make dc-hello (inline env)"
 $R run "CUSTOM_ENV=Human make dc-hello"
 header_end
