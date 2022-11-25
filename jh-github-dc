@@ -182,7 +182,7 @@ case "$CMD" in
     ;;
 
 "run")
-    if env | grep PARAM_ ; then
+    if env | grep -v "=$" | grep PARAM_ ; then
         echo "You can not call 'run' with options" >&2
         echo "::warning::You can not call 'run' with options (this will be an error in the future)"
         # TODO: exit 1
