@@ -7,14 +7,11 @@ inputs:
   run:
     description: Shell to run
   dc-user:
-    description: Who run the commands
-    default: root
+    description: Who run the commands (root)
   privileged:
-    description: (future) Should we run with the privileged flag?
-    default: true
+    description: (future) Should we run with the privileged flag? (false)
   with-socket:
-    description: (future) Do we mount the docker socket inside?
-    default: 
+    description: (future) Do we mount the docker socket inside? (false)
 outputs:
   container:
     description: "Container name"
