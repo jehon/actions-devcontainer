@@ -9,7 +9,9 @@ inputs:
   dc-user:
     description: Who run the commands (root)
   privileged:
-    description: (future) Should we run with the privileged flag? (false)
+    description: Should we run with the privileged flag? (false)
+  init:
+    description: Should we run with the init flag? (false)
   with-socket:
     description: (future) Do we mount the docker socket inside? (false)
 outputs:
@@ -28,6 +30,7 @@ runs:
         DC_TMP: tmp/dc
         PARAM_USER: ${{ inputs.dc-user }}
         PARAM_PRIVILEGED: ${{ inputs.privileged }}
+        PARAM_INIT: ${{ inputs.init }}
         PARAM_WITH_SOCKET: ${{ inputs.with-socket }}
         DEBUG:
 

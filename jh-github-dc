@@ -84,6 +84,10 @@ case "$CMD" in
         ARGS=("${ARGS[@]}" --privileged)
     fi
 
+    if is_true "$PARAM_INIT" ; then
+        ARGS=("${ARGS[@]}" --init)
+    fi
+
     if is_true "$PARAM_WITH_SOCKET" ; then
         ARGS=("${ARGS[@]}" --mount "source=/var/run/docker.sock,dest=/var/run/docker.sock,type=bind")
     fi
@@ -102,6 +106,7 @@ case "$CMD" in
     echo "* PARAM_USER:             $PARAM_USER"
     printf "* PARAM_PRIVILEGED:       %-5s ( %-3s )\n"  "$PARAM_PRIVILEGED" "$( is_true "$PARAM_PRIVILEGED" && echo "yes" || echo "no")"
     printf "* PARAM_WITH_SOCKET:      %-5s ( %-3s )\n"  "$PARAM_WITH_SOCKET" "$( is_true "$PARAM_WITH_SOCKET" && echo "yes" || echo "no")"
+    printf "* PARAM_INIT:             %-5s ( %-3s )\n"  "$PARAM_INIT" "$( is_true "$PARAM_INIT" && echo "yes" || echo "no")"
     echo "* "
     echo "* ARGS:                   ${ARGS[*]}"
     echo "* DC_TMP:                 $DC_TMP"
