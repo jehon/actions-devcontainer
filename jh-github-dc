@@ -78,8 +78,6 @@ case "$CMD" in
         ARGS=("${ARGS[@]}" --user "$PARAM_USER")
     fi
     
-    # TODO: legacy value
-    PARAM_PRIVILEGED="true"
     if is_true "$PARAM_PRIVILEGED" ; then
         ARGS=("${ARGS[@]}" --privileged)
     fi
