@@ -16,6 +16,8 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - run: npm ci
+
     - id: start
       name: start docker
       uses: jehon/actions-devcontainer@main

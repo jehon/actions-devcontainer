@@ -17,3 +17,7 @@ https://github.com/actions/upload-artifact
 
 Env file:
     $DOCKER_CONTEXT/actions-devcontainer.env
+
+## Librairies
+
+https://github.com/devcontainers/cli
