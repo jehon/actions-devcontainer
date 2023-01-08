@@ -14,29 +14,15 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - run: npm ci
-
-    - id: start
-      name: start docker
+    - name: ls /
       uses: ./
       with:
-        action: start
-
-    - name: check outputs
-      run: |
-        echo ${{ steps.start.outputs.container }}
-        test -n "${{ steps.start.outputs.container }}"
-
-    - name: "inside: true"
-      uses: ./
-      with:
-        run: "true"
+        run: ls /
 
     - name: "inside: true || false"
       uses: ./
       with:
         run: "true || false"
-
 
     - name: stop docker
       uses: ./

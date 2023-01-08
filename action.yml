@@ -20,5 +20,5 @@ outputs:
     value: ${{ steps.run.outputs.container }}
 runs:
   using: "node16"
-  main: "index.js"
+  main: "main.js"
   post: "cleanup.js"
