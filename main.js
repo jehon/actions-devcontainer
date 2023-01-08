@@ -42,7 +42,6 @@ try {
             break;
     }
 
-
     // const nameToGreet = core.getInput('run');
     // console.log(`Hello ${nameToGreet}!`);
 
