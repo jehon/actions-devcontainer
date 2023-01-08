@@ -1,7 +1,8 @@
+#!/usr/bin/env node
 
-const core = require('@actions/core');
-const github = require('@actions/github');
-const { StateIsStarted, InputRun, InputAction } = require('./consts');
+import core from '@actions/core';
+// import github from '@actions/github';
+import { StateIsStarted, InputRun, InputAction } from './consts.js';
 
 try {
     //
@@ -15,8 +16,6 @@ try {
     // state:
     // - isStarted (boolean)
 
-    console.log(core.getSate(StateIsStarted))
-
     const action = core.getInput(InputAction);
 
     switch(action) {
@@ -25,12 +24,12 @@ try {
 
             // core.setOutput("container", 'blablabla');
 
-            core.setState(StateIsStarted, true);
+            core.saveState(StateIsStarted, true);
             break;
 
             case 'stop':
             console.log("Stopping devcontainer");
-            core.warn('Stopping is not implemented');
+            core.warning('Stopping is not implemented');
             break;
                 
         case '':

@@ -1,4 +1,4 @@
-const core = require('@actions/core');
-const github = require('@actions/github');
+// import core from '@actions/core';
+// import github from '@actions/github';
 
-var pid = core.getState("pidToKill");
+// var pid = core.getState("pidToKill");
