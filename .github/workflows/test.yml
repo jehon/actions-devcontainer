@@ -3,8 +3,6 @@ name: Makefile
 on:
   push:
   pull_request:
-    branches:
-    - main
   workflow_dispatch:
   schedule:
     - cron: '0 0 * * *'
@@ -20,7 +18,7 @@ jobs:
 
     - id: start
       name: start docker
-      uses: jehon/actions-devcontainer@main
+      uses: ./
       with:
         action: start
 
@@ -30,18 +28,18 @@ jobs:
         test -n "${{ steps.start.outputs.container }}"
 
     - name: "inside: true"
-      uses: jehon/actions-devcontainer@main
+      uses: ./
       with:
         run: "true"
 
     - name: "inside: true || false"
-      uses: jehon/actions-devcontainer@main
+      uses: ./
       with:
         run: "true || false"
 
 
     - name: stop docker
-      uses: jehon/actions-devcontainer@main
+      uses: ./
       with:
         action: stop
 
