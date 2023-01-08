@@ -14,6 +14,11 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - name: Start devcontainer
+      uses: ./
+      with:
+        action: start
+
     - name: ls /
       uses: ./
       with:
