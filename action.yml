@@ -19,25 +19,6 @@ outputs:
     description: "Container name"
     value: ${{ steps.run.outputs.container }}
 runs:
-  using: composite
-  steps:
-    - id: run
-      run: |
-        . ${{ github.action_path }}/jh-github-dc "${{ inputs.action }}" "${{ inputs.run }}"
-        echo "container='${CONTAINER_NAME}'" > "$GITHUB_OUTPUT"
-      shell: bash
-      env:
-        DC_TMP: tmp/dc
-        PARAM_USER: ${{ inputs.dc-user }}
-        PARAM_PRIVILEGED: ${{ inputs.privileged }}
-        PARAM_INIT: ${{ inputs.init }}
-        PARAM_WITH_SOCKET: ${{ inputs.with-socket }}
-        DEBUG:
-
-    - name: Upload dc log
-      if: ${{ inputs.action == 'stop' }}
-      uses: actions/upload-artifact@v3
-      with:
-        name: dc-logs
-        path: tmp/dc
-        if-no-files-found: ignore
+  using: "node16"
+  main: "index.js"
+  post: "cleanup.js"
