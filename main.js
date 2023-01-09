@@ -73,6 +73,7 @@ try {
                 : core.getInput(InputRun)
     
             console.log(`Running ${run}`);
+            runDevContainer('exec', 'bash', '-c', run);
             break;
         
         default:
