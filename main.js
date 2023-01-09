@@ -74,6 +74,10 @@ try {
     
             console.log(`Running ${run}`);
             break;
+        
+        default:
+            core.error(`Unknown command: ${action}`);
+            break;
     }
 
     // const nameToGreet = core.getInput('run');
