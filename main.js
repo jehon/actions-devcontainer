@@ -66,7 +66,6 @@ try {
         case '':
             if (!core.getState(StateIsStarted)) {
                 core.error('Devcontainer was not started');
-                console.log(core.getState(StateIsStarted));
             }
             const run = process.argv.length > 3
                 ? process.argv[3]
