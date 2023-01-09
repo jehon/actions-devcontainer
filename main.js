@@ -7,7 +7,7 @@ import core from '@actions/core';
 // import github from '@actions/github';
 import { actionPath, StateIsStarted, InputRun, InputAction } from './consts.js';
 
-function runDevContainer(command, args = []) {
+function runDevContainer(command, ...args) {
     // https://nodejs.org/api/child_process.html#child_processspawnsynccommand-args-options
     const result = spawnSync(path.join(actionPath, 'node_modules', '.bin', 'devcontainer'), 
         [ command, ...args ], 
@@ -37,15 +37,20 @@ try {
     // state:
     // - isStarted (boolean)
 
-    const action = core.getInput(InputAction);
+    const action = process.argv.length > 2
+        ? process.argv[2]
+        : core.getInput(InputAction)
+
+    console.log(`Action: ${action}`, process.argv);
 
     switch(action) {
         case 'start':
-            console.log("Starting devcontainer");
+            if (core.getState(StateIsStarted)) {
+                core.warning("Container started multiple times");
+            } else {
+                runDevContainer('up', '--workspace-folder', '.');
+            }
 
-            runDevContainer('-h');
-
-            // core.setOutput("container", 'blablabla');
             core.saveState(StateIsStarted, true);
             break;
 
