@@ -10,7 +10,10 @@ import { actionPath, StateIsStarted, InputRun, InputAction } from './consts.js';
 function runDevContainer(command, ...args) {
     // https://nodejs.org/api/child_process.html#child_processspawnsynccommand-args-options
     const result = spawnSync(path.join(actionPath, 'node_modules', '.bin', 'devcontainer'), 
-        [ command, ...args ], 
+        [ command,
+            '--workspace-folder', '.',
+            ...args
+        ], 
         { stdio: 'inherit' }
     );
     
@@ -48,7 +51,7 @@ try {
             if (core.getState(StateIsStarted)) {
                 core.warning("Container started multiple times");
             } else {
-                runDevContainer('up', '--workspace-folder', '.');
+                runDevContainer('up');
             }
 
             core.saveState(StateIsStarted, true);
