@@ -1,8 +1,29 @@
 #!/usr/bin/env node
 
+import { spawnSync } from 'node:child_process';
+import path from 'path';
+
 import core from '@actions/core';
 // import github from '@actions/github';
-import { StateIsStarted, InputRun, InputAction } from './consts.js';
+import { actionPath, StateIsStarted, InputRun, InputAction } from './consts.js';
+
+function runDevContainer(command, args = []) {
+    // https://nodejs.org/api/child_process.html#child_processspawnsynccommand-args-options
+    const result = spawnSync(path.join(actionPath, 'node_modules', '.bin', 'devcontainer'), 
+        [ command, ...args ], 
+        { stdio: 'inherit' }
+    );
+    
+    if (result.error) {
+        console.error("Running give an error", { result });
+        throw  result.error;
+    }
+
+    if (result.status > 0) {
+        console.error("Running give an exit code", { result });
+        throw `DevContainer ${command} failed (${args.join(',')})`;
+    }
+}
 
 try {
     //
@@ -22,12 +43,13 @@ try {
         case 'start':
             console.log("Starting devcontainer");
 
-            // core.setOutput("container", 'blablabla');
+            runDevContainer('-h');
 
+            // core.setOutput("container", 'blablabla');
             core.saveState(StateIsStarted, true);
             break;
 
-            case 'stop':
+        case 'stop':
             console.log("Stopping devcontainer");
             core.warning('Stopping is not implemented');
             break;
