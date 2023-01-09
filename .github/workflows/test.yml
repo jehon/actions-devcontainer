@@ -14,27 +14,20 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - id: start
-      name: start docker
+    - name: Start devcontainer
       uses: ./
       with:
         action: start
 
-    - name: check outputs
-      run: |
-        echo ${{ steps.start.outputs.container }}
-        test -n "${{ steps.start.outputs.container }}"
-
-    - name: "inside: true"
+    - name: ls /
       uses: ./
       with:
-        run: "true"
+        run: ls /
 
     - name: "inside: true || false"
       uses: ./
       with:
         run: "true || false"
-
 
     - name: stop docker
       uses: ./
