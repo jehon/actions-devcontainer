@@ -5,16 +5,18 @@ import path from 'path';
 
 import core from '@actions/core';
 // import github from '@actions/github';
-import { actionPath, StateIsStarted, InputRun, InputAction } from './consts.js';
+import { actionPath, workspacePath, StateIsStarted, InputRun, InputAction } from './consts.js';
 
 function runDevContainer(command, ...args) {
     // https://nodejs.org/api/child_process.html#child_processspawnsynccommand-args-options
     const result = spawnSync(path.join(actionPath, 'node_modules', '.bin', 'devcontainer'), 
         [ command,
-            '--workspace-folder', '.',
+            '--workspace-folder', workspacePath,
             ...args
         ], 
-        { stdio: 'inherit' }
+        { 
+            stdio: 'inherit'
+        }
     );
     
     if (result.error) {
