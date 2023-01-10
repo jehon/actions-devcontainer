@@ -44,7 +44,7 @@ try {
         ? process.argv[2]
         : core.getInput(InputAction)
 
-    console.log(`Action: ${action}`, process.argv);
+    console.log(`Action: ${action}`);
 
     switch(action) {
         case 'start':
