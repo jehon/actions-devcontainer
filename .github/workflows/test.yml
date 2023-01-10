@@ -15,22 +15,22 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Start devcontainer
-      uses: ./
+      uses: jehon/actions-devcontainer@main
       with:
         action: start
 
     - name: ls /
-      uses: ./
+      uses: jehon/actions-devcontainer@main
       with:
         run: ls /
 
     - name: "inside: true || false"
-      uses: ./
+      uses: jehon/actions-devcontainer@main
       with:
         run: "true || false"
 
     - name: stop docker
-      uses: ./
+      uses: jehon/actions-devcontainer@main
       with:
         action: stop
 
