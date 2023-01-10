@@ -1,0 +1,38 @@
+name: Makefile
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  ga-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Start devcontainer
+      uses: ./
+      with:
+        action: start
+
+    - name: ls /
+      uses: ./
+      with:
+        run: ls /
+
+    - name: "inside: true || false"
+      uses: ./
+      with:
+        run: "true || false"
+
+    - name: stop docker
+      uses: ./
+      with:
+        action: stop
+
+    - name: test scripts
+      run: make test
