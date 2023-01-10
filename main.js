@@ -9,13 +9,16 @@ import { actionPath, workspacePath, StateIsStarted, InputRun, InputAction } from
 
 function runDevContainer(command, ...args) {
     // https://nodejs.org/api/child_process.html#child_processspawnsynccommand-args-options
-    const result = spawnSync(path.join(actionPath, 'node_modules', '.bin', 'devcontainer'), 
+    console.log({ actionPath, workspacePath });
+
+    const result = spawnSync(path.join(actionPath, 'node_modules/@devcontainers/cli/devcontainer.js'), 
         [ command,
             '--workspace-folder', workspacePath,
             ...args
         ], 
         { 
-            stdio: 'inherit'
+            stdio: 'inherit',
+            cwd: actionPath
         }
     );
     
